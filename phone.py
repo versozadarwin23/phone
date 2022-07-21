@@ -403,7 +403,10 @@ def device_tasks(device):
                         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.LINK_TEXT, "Confirm"))).click()
                         time.sleep(3)
                     except:
-                        break
+                        try:
+                            WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.LINK_TEXT, "See More"))).click()
+                        except:
+                            break
         try:
             driver.delete_all_cookies()
             driver.get('https://free.facebook.com/login.php')
