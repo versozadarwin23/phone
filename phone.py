@@ -199,7 +199,7 @@ def device_tasks(device):
             while True:
                 try:
                     time.sleep(10)
-                    driver.get("https://free.facebook.com/login.php")
+                    driver.get("https://mbasic.facebook.com/login.php")
                     WebDriverWait(driver, 120).until(EC.visibility_of_element_located((By.NAME, "email")))
                     break
                 except:
@@ -244,15 +244,18 @@ def device_tasks(device):
                     pass
             # check if block or wrong password
             try:
-                driver.get('https://free.facebook.com/profile_picture?_rdc=1&_rdr')
+                driver.get('https://mbasic.facebook.com/profile_picture?_rdc=1&_rdr')
                 WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.NAME, 'pic')))
+                driver.get('https://mbasic.facebook.com/')
+                WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "xc_message"))).send_keys("dfhgbdghjsdbfsdbhjsbdfshjbdfsbfsjdbfsbfsjdbfhsdvfhgvxnbcx vdshgvfgsvfhsdvfhsbdvfshgdvfgshdvfshgdvfgshdvfgshdvfgshdfvewfcgvdhgsvesgfvsgeh")
+
             except:
                 try:
                     driver.delete_all_cookies()
                 except:
                     pass
                 try:
-                    driver.get('https://free.facebook.com/login.php')
+                    driver.get('https://mbasic.facebook.com/login.php')
                     print(x["deviceID"] + " " + x["username"] + " " + "Login Error")
                     continue
                 except:
@@ -261,7 +264,7 @@ def device_tasks(device):
 
             if x["post photo"] == "yes":
                 try:
-                    driver.get('https://free.facebook.com/')
+                    driver.get('https://mbasic.facebook.com/')
                 except:
                     pass
 
@@ -350,7 +353,7 @@ def device_tasks(device):
                 post_timeline = timeline_post(category=x["category"])
                 for g in post_timeline:
                     try:
-                        driver.get("https://free.facebook.com/home.php")
+                        driver.get("https://mbasic.facebook.com/home.php")
                     except:
                         pass
                     try:
@@ -362,6 +365,20 @@ def device_tasks(device):
                         print(x["deviceID"] + " " + x["profile"] + " " + g + " " + "Timeline Post Done")
                     except:
                         pass
+
+            #  join group
+            if x["Join Group"] == "yes":
+                for join in x["Group_Link"].split(" "):
+                    try:
+                        driver.get(join)
+                    except:
+                        pass
+                    try:
+                        if WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[value="Join Group"]'))).click():
+                            print(x["deviceID"] + " " + x["profile"] + " " + join + " " + "join group done")
+                    except:
+                        pass
+
             # reaction
             if x["reaction"] == "yes":
                 for o in x["links_to_react"].split(" "):
@@ -395,7 +412,7 @@ def device_tasks(device):
                         pass
             if x["friends confirm"] == "yes":
                 try:
-                    driver.get("https://free.facebook.com/friends/center/requests/")
+                    driver.get("https://mbasic.facebook.com/friends/center/requests/")
                 except:
                     pass
                 for y in range(1000):
@@ -409,7 +426,7 @@ def device_tasks(device):
                             break
         try:
             driver.delete_all_cookies()
-            driver.get('https://free.facebook.com/login.php')
+            driver.get('https://mbasic.facebook.com/login.php')
         except:
             pass
 
