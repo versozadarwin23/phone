@@ -157,11 +157,9 @@ def device_tasks(device):
         uiautomator2ServerLaunchTimeout='96000',
         platformVersion=device["platformVersion"],
         deviceName=device["deviceName"],
-        disableWindowAnimation=True,
         skipServerInstallation=True,
         ignoreUnimportantViews=True,
         skipDeviceInitialization=True,
-        disableAndroidWatchers=True,
         deviceReadyTimeout='999999',
         skipLogcatCapture=True,
         adbExecTimeout='999999',
@@ -198,8 +196,8 @@ def device_tasks(device):
                 pass
             while True:
                 try:
-                    time.sleep(10)
-                    driver.get("https://mbasic.facebook.com/login.php")
+                    time.sleep(15)
+                    driver.get("https://free.facebook.com/login.php")
                     WebDriverWait(driver, 120).until(EC.visibility_of_element_located((By.NAME, "email")))
                     break
                 except:
@@ -244,18 +242,15 @@ def device_tasks(device):
                     pass
             # check if block or wrong password
             try:
-                driver.get('https://mbasic.facebook.com/profile_picture?_rdc=1&_rdr')
+                driver.get('https://free.facebook.com/profile_picture?_rdc=1&_rdr')
                 WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.NAME, 'pic')))
-                driver.get('https://mbasic.facebook.com/')
-                WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "xc_message"))).send_keys("dfhgbdghjsdbfsdbhjsbdfshjbdfsbfsjdbfsbfsjdbfhsdvfhgvxnbcx vdshgvfgsvfhsdvfhsbdvfshgdvfgshdvfshgdvfgshdvfgshdvfgshdfvewfcgvdhgsvesgfvsgeh")
-
             except:
                 try:
                     driver.delete_all_cookies()
                 except:
                     pass
                 try:
-                    driver.get('https://mbasic.facebook.com/login.php')
+                    driver.get('https://free.facebook.com/login.php')
                     print(x["deviceID"] + " " + x["username"] + " " + "Login Error")
                     continue
                 except:
@@ -264,7 +259,7 @@ def device_tasks(device):
 
             if x["post photo"] == "yes":
                 try:
-                    driver.get('https://mbasic.facebook.com/')
+                    driver.get('https://free.facebook.com/')
                 except:
                     pass
 
@@ -303,33 +298,83 @@ def device_tasks(device):
                         WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Like'))).click()
                         print(x["deviceID"] + " " + x["profile"] + " " + like_page + " " + "Like Page Done")
                     except:
+                        pass
+                    try:
+                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Like'))).click()
+                    except:
+                        pass
+                    try:
+                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Share'))).click()
+                    except:
+                        pass
+                    try:
+                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Share"]'))).click()
+                    except:
+                        pass
+
+            #Follow Page
+            if x["Follow Page"] == "yes":
+                for follow_page in x["Follow Page_Link"].split(" "):
+                    while True:
                         try:
-                            WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Follow'))).click()
+                            driver.get(follow_page)
+                            break
                         except:
                             pass
+                    try:
+                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Follow'))).click()
+                        print(x["deviceID"] + " " + x["profile"] + " " + follow_page + " " + "Follow Page Done")
+                    except:
+                        pass
+                    try:
+                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Like'))).click()
+                    except:
+                        pass
+                    try:
+                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Share'))).click()
+                    except:
+                        pass
+                    try:
+                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Share"]'))).click()
+                    except:
+                        pass
+
+            #Join Group
+            if x["Join Group"] == "yes":
+                for join_group in x["Join Group_Link"].split(" "):
+                    while True:
+                        try:
+                            driver.get(join_group)
+                            break
+                        except:
+                            pass
+                    try:
+                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Join Group"]'))).click()
+                        print(x["deviceID"] + " " + x["profile"] + " " + join_group + " " + "Join Group Done")
+                    except:
+                        pass
 
             #comment
             if x["Comment"] == "yes":
-                driver.get(x["comment link"].split(" "))
                 options = random.choice([1, 1, 2, 2, 3, 3])
                 comment = fetch_random_comment_by_category(category=x["category"], number=options)
-                try:
-                    WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.ID, 'composerInput'))).send_keys(comment)
-                except:
-                    pass
-                try:
-                    WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.ID, 'composerInput'))).click()
-                    if WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[title="Your account is restricted right now"]'))):
-                        print(x["deviceID"] + " " + x["profile"] + " " + "Your account is restricted right now")
-                        break
-                    print(x["deviceID"] + " " + x["profile"] + " " + x["comment link"].split(" ") + " " + "Comment Done")
-                except:
+                for dawss in x["comment link"].split(" "):
+                    driver.get(dawss)
                     try:
-                        if WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[title="Your account is restricted right now"]'))):
-                            break
+                        WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.ID, 'composerInput'))).send_keys(comment)
                     except:
                         pass
-                    pass
+                    try:
+                        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[value="Comment"]'))).click()
+                        print(x["deviceID"] + " " + x["profile"] + " " + dawss + " " + "Comment done")
+                    except:
+                        pass
+                    try:
+                        WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.LINK_TEXT, 'Back to home')))
+                        print(x["deviceID"] + " " + x["profile"] + " " + "Your account is restricted right now")
+                        break
+                    except:
+                        pass
 
             # share Post
             if x["share"] == "yes":
@@ -347,13 +392,19 @@ def device_tasks(device):
                         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "view_post"))).click()
                     except:
                         pass
+                    try:
+                        WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[title="Your account is restricted right now"]')))
+                        print(x["deviceID"] + " " + x["profile"] + " " + "Your account is restricted right now")
+                        break
+                    except:
+                        pass
 
             # Post Timeline without caption
             if x["timeline post"] == "yes":
                 post_timeline = timeline_post(category=x["category"])
                 for g in post_timeline:
                     try:
-                        driver.get("https://mbasic.facebook.com/home.php")
+                        driver.get("https://free.facebook.com/home.php")
                     except:
                         pass
                     try:
@@ -365,20 +416,6 @@ def device_tasks(device):
                         print(x["deviceID"] + " " + x["profile"] + " " + g + " " + "Timeline Post Done")
                     except:
                         pass
-
-            #  join group
-            if x["Join Group"] == "yes":
-                for join in x["Group_Link"].split(" "):
-                    try:
-                        driver.get(join)
-                    except:
-                        pass
-                    try:
-                        if WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[value="Join Group"]'))).click():
-                            print(x["deviceID"] + " " + x["profile"] + " " + join + " " + "join group done")
-                    except:
-                        pass
-
             # reaction
             if x["reaction"] == "yes":
                 for o in x["links_to_react"].split(" "):
@@ -411,24 +448,27 @@ def device_tasks(device):
                     except:
                         pass
             if x["friends confirm"] == "yes":
-                try:
-                    driver.get("https://mbasic.facebook.com/friends/center/requests/")
-                except:
-                    pass
                 for y in range(1000):
                     try:
+                        driver.get("https://free.facebook.com/friends/center/requests/")
+                        WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.LINK_TEXT, 'Back to home')))
+                        break
+                    except:
+                        pass
+                    try:
                         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.LINK_TEXT, "Confirm"))).click()
-                        time.sleep(3)
+                        driver.get("https://free.facebook.com/friends/center/requests/")
                     except:
                         try:
-                            WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.LINK_TEXT, "See More"))).click()
-                        except:
+                            WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.LINK_TEXT, "See See People You May Know")))
                             break
-        try:
-            driver.delete_all_cookies()
-            driver.get('https://mbasic.facebook.com/login.php')
-        except:
-            pass
+                        except:
+                            pass
+            try:
+                driver.delete_all_cookies()
+                driver.get('https://free.facebook.com/login.php')
+            except:
+                pass
 
 if __name__ == "__main__":  # confirms that the code is under main function
     for i in phones_sheet:
