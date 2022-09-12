@@ -358,7 +358,7 @@ def device_tasks(device):
             if x["Comment"] == "yes":
                 options = random.choice([1, 1, 2, 2, 3, 3])
                 comment = fetch_random_comment_by_category(category=x["category"], number=options)
-                for dawss in x["comment link"].split(" "):
+                for comments in x["comment link"].split(" "):
                     driver.get(dawss)
                     try:
                         WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.ID, 'composerInput'))).send_keys(comment)
@@ -366,7 +366,7 @@ def device_tasks(device):
                         pass
                     try:
                         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[value="Comment"]'))).click()
-                        print(x["deviceID"] + " " + x["profile"] + " " + dawss + " " + "Comment done")
+                        print(x["deviceID"] + " " + x["profile"] + " " + comments + " " + "Comment done")
                     except:
                         pass
                     try:
@@ -459,11 +459,14 @@ def device_tasks(device):
                         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.LINK_TEXT, "Confirm"))).click()
                         driver.get("https://free.facebook.com/friends/center/requests/")
                     except:
-                        try:
-                            WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.LINK_TEXT, "See See People You May Know")))
-                            break
-                        except:
-                            pass
+                        driver.refresh
+                        pass
+                    try:
+                        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.LINK_TEXT, "See People You May Know")))
+                        break
+                    except:
+                        pass
+
             try:
                 driver.delete_all_cookies()
                 driver.get('https://free.facebook.com/login.php')
