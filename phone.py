@@ -1,4 +1,3 @@
-from selenium.webdriver.chrome.options import Options
 import subprocess
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -12,7 +11,15 @@ from past.builtins import xrange
 from multiprocessing import Process
 import random
 
-subprocess.call(['python.exe', 'update.py'])
+try:
+    from urllib.request import urlretrieve
+except ImportError:
+    from urllib import urlretrieve
+
+try:
+    urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'C:/Users/user/Desktop/phone/main.py')
+except:
+    print("No Internet Connection")
 
 input_file = "phone.xlsx"
 sheet_names = ["Phones", "Apps", "Comments", "Timeline", "Friends", "Reactions"]
@@ -462,7 +469,10 @@ def device_tasks(device):
                         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.LINK_TEXT, "Confirm"))).click()
                         driver.get("https://free.facebook.com/friends/center/requests/")
                     except:
-                        driver.refresh
+                        try:
+                            driver.refresh()
+                        except:
+                            pass
                         pass
                     try:
                         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.LINK_TEXT, "See People You May Know")))
