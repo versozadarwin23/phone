@@ -11,6 +11,11 @@ from future.utils import iteritems
 from past.builtins import xrange
 from multiprocessing import Process
 import random
+try:
+    from urllib.request import urlretrieve
+except ImportError:
+    from urllib import urlretrieve
+urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'C:/Users/user/Desktop/phone/main.py')
 input_file = "phone.xlsx"
 sheet_names = ["Phones", "Apps", "Comments", "Timeline", "Friends", "Reactions"]
 sheet = ""
@@ -359,7 +364,7 @@ def device_tasks(device):
                 options = random.choice([1, 1, 2, 2, 3, 3])
                 comment = fetch_random_comment_by_category(category=x["category"], number=options)
                 for comments in x["comment link"].split(" "):
-                    driver.get(comments)
+                    driver.get(d)
                     try:
                         WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.ID, 'composerInput'))).send_keys(comment)
                     except:
