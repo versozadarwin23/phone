@@ -17,7 +17,7 @@ except ImportError:
     from urllib import urlretrieve
 
 try:
-    urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'C:/Users/user/Desktop/phone/main.py')
+    urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'C:/Users/user/Desktop/phone/phone.py')
 except:
     print("No Internet Connection")
 
