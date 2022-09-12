@@ -364,7 +364,7 @@ def device_tasks(device):
                 options = random.choice([1, 1, 2, 2, 3, 3])
                 comment = fetch_random_comment_by_category(category=x["category"], number=options)
                 for comments in x["comment link"].split(" "):
-                    driver.get(d)
+                    driver.get(comments)
                     try:
                         WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.ID, 'composerInput'))).send_keys(comment)
                     except:
