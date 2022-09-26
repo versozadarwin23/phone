@@ -206,6 +206,7 @@ def device_tasks(device):
             subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global stay_on_while_plugged_in 3", shell=True)
         except:
             pass
+        
         if x["signup"] == "yes":
             try:
                 airplane_mode(device)
@@ -251,6 +252,7 @@ def device_tasks(device):
                     WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[action="/zero/optin/write/?action=confirm&page=dialtone_optin_page"]'))).click()
                 except:
                     pass
+
             # check if block or wrong password
             try:
                 driver.get('https://free.facebook.com/profile_picture?_rdc=1&_rdr')
@@ -308,33 +310,6 @@ def device_tasks(device):
                     try:
                         WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Like'))).click()
                         print(x["deviceID"] + " " + x["profile"] + " " + like_page + " " + "Like Page Done")
-                    except:
-                        pass
-                    try:
-                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Like'))).click()
-                    except:
-                        pass
-                    try:
-                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Share'))).click()
-                    except:
-                        pass
-                    try:
-                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Share"]'))).click()
-                    except:
-                        pass
-
-            #Follow Page
-            if x["Follow Page"] == "yes":
-                for follow_page in x["Follow Page_Link"].split(" "):
-                    while True:
-                        try:
-                            driver.get(follow_page)
-                            break
-                        except:
-                            pass
-                    try:
-                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Follow'))).click()
-                        print(x["deviceID"] + " " + x["profile"] + " " + follow_page + " " + "Follow Page Done")
                     except:
                         pass
                     try:
