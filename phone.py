@@ -160,7 +160,27 @@ def get_reaction_by_link(link):
             reaction = x["Reaction"]
     return reaction
 
+def airplane_mode(device):
+    try:
+        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global airplane_mode_on 1", shell=True)
+    except:
+        pass
+    try:
+        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell am broadcast -a android.intent.action.AIRPLANE_MODE --ez state true", shell=True)
+        time.sleep(10)
+    except:
+        pass
+    try:
+        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global airplane_mode_on 0", shell=True)
+    except:
+        pass
+    try:
+        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell am broadcast -a android.intent.action.AIRPLANE_MODE --ez state false", shell=True)
+    except:
+        pass
+
 def device_tasks(device):
+    global load_done
     fb_apps = dict(
         platformName=device["platformName"],
         automationName=device["automationName"],
@@ -188,58 +208,39 @@ def device_tasks(device):
             pass
         if x["signup"] == "yes":
             try:
-                subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global airplane_mode_on 1", shell=True)
+                airplane_mode(device)
             except:
                 pass
-            try:
-                subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell am broadcast -a android.intent.action.AIRPLANE_MODE --ez state true", shell=True)
-                time.sleep(5)
-            except:
-                pass
-            try:
-                subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global airplane_mode_on 0", shell=True)
-            except:
-                pass
-            try:
-                subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell am broadcast -a android.intent.action.AIRPLANE_MODE --ez state false", shell=True)
-            except:
-                pass
+
             while True:
                 try:
-                    time.sleep(15)
                     driver.get("https://free.facebook.com/login.php")
-                    WebDriverWait(driver, 120).until(EC.visibility_of_element_located((By.NAME, "email")))
+                    WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.NAME, "email")))
                     break
                 except:
                     try:
-                        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global airplane_mode_on 1",shell=True)
+                        driver.quit()
                     except:
                         pass
                     try:
-                        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell am broadcast -a android.intent.action.AIRPLANE_MODE --ez state true",shell=True)
-                        time.sleep(10)
+                        device_tasks(device)
                     except:
                         pass
-                    try:
-                        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global airplane_mode_on 0",shell=True)
-                    except:
-                        pass
-                    try:
-                        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell am broadcast -a android.intent.action.AIRPLANE_MODE --ez state false",shell=True)
-                    except:
-                        pass
-                    pass
+
             while True:
                 try:
-                    WebDriverWait(driver, 1).until(EC.visibility_of_element_located((By.NAME, "email"))).send_keys(x["username"])
+                    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, "email"))).send_keys(x["username"])
+                except:
+                    try:
+                        device_tasks(device)
+                    except:
+                        pass
+                try:
+                    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, "pass"))).send_keys(x["password"])
                 except:
                     pass
                 try:
-                    WebDriverWait(driver, 1).until(EC.visibility_of_element_located((By.NAME, "pass"))).send_keys(x["password"])
-                except:
-                    pass
-                try:
-                    WebDriverWait(driver, 1).until(EC.visibility_of_element_located((By.NAME, "login"))).click()
+                    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, "login"))).click()
                     break
                 except:
                     pass
