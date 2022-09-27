@@ -464,6 +464,7 @@ def device_tasks(device):
                 pass
             try:
                 airplane_mode_on(device)
+                time.sleep(10)
             except:
                 pass
 
