@@ -4,9 +4,10 @@ except ImportError:
     from urllib import urlretrieve
 
 try:
-    urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'C:/Users/user/Desktop/phone/phone.py')
+    urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py',
+                'C:/Users/user/Desktop/phone/phone.py')
 except:
-    print("No Internet Connection")
+    print("your laptop not connected to wifi")
 
 import subprocess
 from selenium.webdriver.common.by import By
@@ -39,6 +40,7 @@ friendList = []
 device = []
 driver = ''
 login = ""
+
 
 def convert_sheet_to_dict(file_path=input_file, sheet=sheet, filter_variables_dict=None):
     global keys
@@ -98,7 +100,7 @@ class XlToDict:
 
 
 myxlobject = XlToDict()
-c = myxlobject.fetch_data_by_column_by_sheet_name_multiple(file_name=input_file,sheet_names=sheet_names,
+c = myxlobject.fetch_data_by_column_by_sheet_name_multiple(file_name=input_file, sheet_names=sheet_names,
                                                            filter_variables_dict=None)
 
 phones_sheet = all_data[0]
@@ -107,6 +109,7 @@ comments_sheet = all_data[2]
 timeline_sheet = all_data[3]
 friends_sheet = all_data[4]
 reactions_sheet = all_data[5]
+
 
 def fetch_random_comment_by_category(category=category, number=number):
     comment_list = []
@@ -120,6 +123,7 @@ def fetch_random_comment_by_category(category=category, number=number):
         comment = comment + " " + z
     return comment
 
+
 def fetch_allPostTimeline_by_category(category=category):
     post_list = []
     f = {}
@@ -130,6 +134,7 @@ def fetch_allPostTimeline_by_category(category=category):
             post_list.append(f)
     return post_list
 
+
 def timeline_post(category=category):
     post_timeline = []
     for x in timeline_sheet:
@@ -139,12 +144,14 @@ def timeline_post(category=category):
             post_timeline.append(post)
     return post_timeline
 
+
 def fetch_friends_by_profile(profile_id=profile_id):
     friends_list = []
     for x in friends_sheet:
         if x["profile"] == profile_id:
             friends_list.append(x["friends"])
     return friends_list
+
 
 def fetch_appName_by_deviceID(deviceID=deviceID):
     appName_list = []
@@ -153,6 +160,7 @@ def fetch_appName_by_deviceID(deviceID=deviceID):
             appName_list.append(x)
     return appName_list
 
+
 def get_reaction_by_link(link):
     reaction = ''
     for x in reactions_sheet:
@@ -160,28 +168,34 @@ def get_reaction_by_link(link):
             reaction = x["Reaction"]
     return reaction
 
+
 def airplane_mode_off(device):
     try:
-        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global airplane_mode_on 0", shell=True)
+        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global airplane_mode_on 0",
+                                shell=True)
     except:
         pass
     try:
-        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell am broadcast -a android.intent.action.AIRPLANE_MODE --ez state false", shell=True)
+        subprocess.check_output("adb -s " + " " + device[
+            "udid"] + " " + "shell am broadcast -a android.intent.action.AIRPLANE_MODE --ez state false", shell=True)
     except:
         pass
+
 
 def airplane_mode_on(device):
     try:
-        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global airplane_mode_on 1", shell=True)
+        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global airplane_mode_on 1",
+                                shell=True)
     except:
         pass
     try:
-        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell am broadcast -a android.intent.action.AIRPLANE_MODE --ez state true", shell=True)
+        subprocess.check_output("adb -s " + " " + device[
+            "udid"] + " " + "shell am broadcast -a android.intent.action.AIRPLANE_MODE --ez state true", shell=True)
     except:
         pass
 
+
 def device_tasks(device):
-    global load_done
     fb_apps = dict(
         platformName=device["platformName"],
         automationName=device["automationName"],
@@ -200,14 +214,24 @@ def device_tasks(device):
         chromedriverExecutable="C:/Users/USER/Desktop/phone/chromedriver/" + device["chromedriver"] + ".exe",
         newCommandTimeout='96000',
     )
-    driver = webdriver.Remote("http://localhost:4723/wd/hub", fb_apps)
+
+    while True:
+        try:
+            driver = webdriver.Remote("http://localhost:4723/wd/hub", fb_apps)
+            print(device["deviceID"] + " " + device["udid"] + " " + "Usb Debugging Connected")
+            break
+        except:
+            print(device["deviceID"] + " " + device["udid"] + " " + "Not Connected Please Unplug and Plugin")
+
     apps = fetch_appName_by_deviceID(deviceID=device["deviceID"])
     for x in apps:
         try:
-            subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global stay_on_while_plugged_in 3", shell=True)
+            subprocess.check_output(
+                "adb -s " + " " + device["udid"] + " " + "shell settings put global stay_on_while_plugged_in 3",
+                shell=True)
         except:
             pass
-        
+
         if x["signup"] == "yes":
             try:
                 airplane_mode_off(device)
@@ -231,14 +255,16 @@ def device_tasks(device):
 
             while True:
                 try:
-                    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, "email"))).send_keys(x["username"])
+                    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, "email"))).send_keys(
+                        x["username"])
                 except:
                     try:
                         device_tasks(device)
                     except:
                         pass
                 try:
-                    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, "pass"))).send_keys(x["password"])
+                    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, "pass"))).send_keys(
+                        x["password"])
                 except:
                     pass
                 try:
@@ -250,7 +276,8 @@ def device_tasks(device):
                 WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.LINK_TEXT, "Not now"))).click()
             except:
                 try:
-                    WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[action="/zero/optin/write/?action=confirm&page=dialtone_optin_page"]'))).click()
+                    WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.CSS_SELECTOR,
+                                                                                      '[action="/zero/optin/write/?action=confirm&page=dialtone_optin_page"]'))).click()
                 except:
                     pass
 
@@ -277,9 +304,10 @@ def device_tasks(device):
                 except:
                     pass
 
-                #Post Timeline photo
+                # Post Timeline photo
                 try:
-                    subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + x["photo"] + " " + "/storage/emulated/0/Download")
+                    subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + x[
+                        "photo"] + " " + "/storage/emulated/0/Download")
                 except:
                     pass
                 try:
@@ -287,11 +315,13 @@ def device_tasks(device):
                 except:
                     pass
                 try:
-                    WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.NAME, 'file1'))).send_keys("//storage//emulated//0//Download//" + x["photo_name"])
+                    WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.NAME, 'file1'))).send_keys(
+                        "//storage//emulated//0//Download//" + x["photo_name"])
                 except:
                     pass
                 try:
-                    WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.NAME, 'add_photo_done'))).click()
+                    WebDriverWait(driver, 20).until(
+                        EC.visibility_of_element_located((By.NAME, 'add_photo_done'))).click()
                 except:
                     pass
                 try:
@@ -299,7 +329,7 @@ def device_tasks(device):
                 except:
                     pass
 
-            #Like Page
+            # Like Page
             if x["Like Page"] == "yes":
                 for like_page in x["Like Page_Link"].split(" "):
                     while True:
@@ -318,15 +348,17 @@ def device_tasks(device):
                     except:
                         pass
                     try:
-                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Share'))).click()
+                        WebDriverWait(driver, 6).until(
+                            EC.visibility_of_element_located((By.LINK_TEXT, 'Share'))).click()
                     except:
                         pass
                     try:
-                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Share"]'))).click()
+                        WebDriverWait(driver, 6).until(
+                            EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Share"]'))).click()
                     except:
                         pass
 
-            #Join Group
+            # Join Group
             if x["Join Group"] == "yes":
                 for join_group in x["Join Group_Link"].split(" "):
                     while True:
@@ -336,23 +368,26 @@ def device_tasks(device):
                         except:
                             pass
                     try:
-                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Join Group"]'))).click()
+                        WebDriverWait(driver, 6).until(
+                            EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Join Group"]'))).click()
                         print(x["deviceID"] + " " + x["profile"] + " " + join_group + " " + "Join Group Done")
                     except:
                         pass
 
-            #comment
+            # comment
             if x["Comment"] == "yes":
                 options = random.choice([1, 1, 2, 2, 3, 3])
                 comment = fetch_random_comment_by_category(category=x["category"], number=options)
                 for comments in x["comment link"].split(" "):
                     driver.get(comments)
                     try:
-                        WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.ID, 'composerInput'))).send_keys(comment)
+                        WebDriverWait(driver, 20).until(
+                            EC.visibility_of_element_located((By.ID, 'composerInput'))).send_keys(comment)
                     except:
                         pass
                     try:
-                        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[value="Comment"]'))).click()
+                        WebDriverWait(driver, 10).until(
+                            EC.presence_of_element_located((By.CSS_SELECTOR, '[value="Comment"]'))).click()
                         print(x["deviceID"] + " " + x["profile"] + " " + comments + " " + "Comment done")
                     except:
                         pass
@@ -380,7 +415,8 @@ def device_tasks(device):
                     except:
                         pass
                     try:
-                        WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[title="Your account is restricted right now"]')))
+                        WebDriverWait(driver, 3).until(EC.presence_of_element_located(
+                            (By.CSS_SELECTOR, '[title="Your account is restricted right now"]')))
                         print(x["deviceID"] + " " + x["profile"] + " " + "Your account is restricted right now")
                         break
                     except:
@@ -395,7 +431,8 @@ def device_tasks(device):
                     except:
                         pass
                     try:
-                        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "xc_message"))).send_keys(g)
+                        WebDriverWait(driver, 10).until(
+                            EC.presence_of_element_located((By.NAME, "xc_message"))).send_keys(g)
                     except:
                         pass
                     try:
@@ -412,12 +449,14 @@ def device_tasks(device):
                     except:
                         pass
                     try:
-                        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.LINK_TEXT, reaction))).click()
+                        WebDriverWait(driver, 10).until(
+                            EC.presence_of_element_located((By.LINK_TEXT, reaction))).click()
                         print(x["deviceID"] + " " + x["profile"] + " " + o + " " + reaction + " " + "React Done")
                     except:
                         pass
                     try:
-                        WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[title="Your account is restricted right now"]')))
+                        WebDriverWait(driver, 3).until(EC.presence_of_element_located(
+                            (By.CSS_SELECTOR, '[title="Your account is restricted right now"]')))
                         print(x["deviceID"] + " " + x["profile"] + " " + "Your account is restricted right now")
                         break
                     except:
@@ -431,7 +470,8 @@ def device_tasks(device):
                     except:
                         pass
                     try:
-                        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.LINK_TEXT, "Add Friend"))).click()
+                        WebDriverWait(driver, 30).until(
+                            EC.presence_of_element_located((By.LINK_TEXT, "Add Friend"))).click()
                     except:
                         pass
             if x["friends confirm"] == "yes":
@@ -443,7 +483,8 @@ def device_tasks(device):
                     except:
                         pass
                     try:
-                        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.LINK_TEXT, "Confirm"))).click()
+                        WebDriverWait(driver, 10).until(
+                            EC.presence_of_element_located((By.LINK_TEXT, "Confirm"))).click()
                         driver.get("https://free.facebook.com/friends/center/requests/")
                     except:
                         try:
@@ -452,7 +493,8 @@ def device_tasks(device):
                             pass
                         pass
                     try:
-                        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.LINK_TEXT, "See People You May Know")))
+                        WebDriverWait(driver, 10).until(
+                            EC.presence_of_element_located((By.LINK_TEXT, "See People You May Know")))
                         break
                     except:
                         pass
@@ -467,6 +509,7 @@ def device_tasks(device):
                 time.sleep(10)
             except:
                 pass
+
 
 if __name__ == "__main__":  # confirms that the code is under main function
     for i in phones_sheet:
