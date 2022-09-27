@@ -232,7 +232,7 @@ def device_tasks(device):
         except:
             pass
 
-        if x["signup"] == "yes":
+        if x["platformVersion"] == "5.1":
             try:
                 airplane_mode_off(device)
             except:
@@ -504,11 +504,13 @@ def device_tasks(device):
                 driver.get('https://free.facebook.com/login.php')
             except:
                 pass
-            try:
-                airplane_mode_on(device)
-                time.sleep(10)
-            except:
-                pass
+            
+            if x["platformVersion"] == "5.1":
+                try:
+                    airplane_mode_on(device)
+                    time.sleep(10)
+                except:
+                    pass
 
 
 if __name__ == "__main__":  # confirms that the code is under main function
