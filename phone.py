@@ -214,15 +214,7 @@ def device_tasks(device):
         chromedriverExecutable="C:/Users/USER/Desktop/phone/chromedriver/" + device["chromedriver"] + ".exe",
         newCommandTimeout='96000',
     )
-
-    while True:
-        try:
-            driver = webdriver.Remote("http://localhost:4723/wd/hub", fb_apps)
-            print(device["deviceID"] + " " + device["udid"] + " " + "Usb Debugging Connected")
-            break
-        except:
-            print(device["deviceID"] + " " + device["udid"] + " " + "Not Connected Please Unplug and Plugin")
-
+    driver = webdriver.Remote("http://localhost:4723/wd/hub", fb_apps)
     apps = fetch_appName_by_deviceID(deviceID=device["deviceID"])
     for x in apps:
         try:
