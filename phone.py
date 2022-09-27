@@ -160,22 +160,23 @@ def get_reaction_by_link(link):
             reaction = x["Reaction"]
     return reaction
 
-def airplane_mode(device):
-    try:
-        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global airplane_mode_on 1", shell=True)
-    except:
-        pass
-    try:
-        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell am broadcast -a android.intent.action.AIRPLANE_MODE --ez state true", shell=True)
-        time.sleep(10)
-    except:
-        pass
+def airplane_mode_off(device):
     try:
         subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global airplane_mode_on 0", shell=True)
     except:
         pass
     try:
         subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell am broadcast -a android.intent.action.AIRPLANE_MODE --ez state false", shell=True)
+    except:
+        pass
+
+def airplane_mode_on(device):
+    try:
+        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global airplane_mode_on 1", shell=True)
+    except:
+        pass
+    try:
+        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell am broadcast -a android.intent.action.AIRPLANE_MODE --ez state true", shell=True)
     except:
         pass
 
@@ -209,7 +210,7 @@ def device_tasks(device):
         
         if x["signup"] == "yes":
             try:
-                airplane_mode(device)
+                airplane_mode_off(device)
             except:
                 pass
 
@@ -459,6 +460,10 @@ def device_tasks(device):
             try:
                 driver.delete_all_cookies()
                 driver.get('https://free.facebook.com/login.php')
+            except:
+                pass
+            try:
+                airplane_mode_on(device)
             except:
                 pass
 
