@@ -218,18 +218,17 @@ def device_tasks(device):
     apps = fetch_appName_by_deviceID(deviceID=device["deviceID"])
     for x in apps:
         try:
-            subprocess.check_output(
-                "adb -s " + " " + device["udid"] + " " + "shell settings put global stay_on_while_plugged_in 3",
-                shell=True)
+            subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global stay_on_while_plugged_in 3", shell=True)
         except:
             pass
 
-        if x["platformVersion"] == "5.1":
+        if device["platformVersion"] == "5.1":
             try:
                 airplane_mode_off(device)
             except:
                 pass
 
+        if x["signup"] == "yes":
             while True:
                 try:
                     driver.get("https://free.facebook.com/login.php")
@@ -497,7 +496,7 @@ def device_tasks(device):
             except:
                 pass
             
-            if x["platformVersion"] == "5.1":
+            if device["platformVersion"] == "5.1":
                 try:
                     airplane_mode_on(device)
                     time.sleep(10)
