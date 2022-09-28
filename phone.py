@@ -218,9 +218,7 @@ def device_tasks(device):
     apps = fetch_appName_by_deviceID(deviceID=device["deviceID"])
     for x in apps:
         try:
-            subprocess.check_output(
-                "adb -s " + " " + device["udid"] + " " + "shell settings put global stay_on_while_plugged_in 3",
-                shell=True)
+            subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global stay_on_while_plugged_in 3",shell=True)
         except:
             pass
 
@@ -237,7 +235,14 @@ def device_tasks(device):
                     WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.NAME, "email")))
                     break
                 except:
-                    pass
+                    try:
+                        driver.quit()
+                    except:
+                        pass
+                    try:
+                        device_tasks(device)
+                    except:
+                        pass
 
             while True:
                 try:
