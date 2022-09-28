@@ -225,6 +225,7 @@ def device_tasks(device):
         if device["platformVersion"] == "5.1":
             try:
                 airplane_mode_off(device)
+                time.sleep(15)
             except:
                 pass
 
@@ -489,7 +490,7 @@ def device_tasks(device):
             if device["platformVersion"] == "5.1":
                 try:
                     airplane_mode_on(device)
-                    time.sleep(10)
+                    time.sleep(6)
                 except:
                     pass
 
