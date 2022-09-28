@@ -237,14 +237,7 @@ def device_tasks(device):
                     WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.NAME, "email")))
                     break
                 except:
-                    try:
-                        driver.quit()
-                    except:
-                        pass
-                    try:
-                        device_tasks(device)
-                    except:
-                        pass
+                    pass
 
             while True:
                 try:
