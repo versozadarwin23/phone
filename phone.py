@@ -236,11 +236,13 @@ def device_tasks(device):
                     break
                 except:
                     try:
-                        driver.quit()
+                        airplane_mode_on(device)
+                        time.sleep(10)
                     except:
                         pass
                     try:
-                        device_tasks(device)
+                        airplane_mode_off(device)
+                        time.sleep(10)
                     except:
                         pass
 
@@ -295,8 +297,7 @@ def device_tasks(device):
 
                 # Post Timeline photo
                 try:
-                    subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + x[
-                        "photo"] + " " + "/storage/emulated/0/Download")
+                    subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + x["photo"] + " " + "/storage/emulated/0/Download")
                 except:
                     pass
                 try:
@@ -304,13 +305,11 @@ def device_tasks(device):
                 except:
                     pass
                 try:
-                    WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.NAME, 'file1'))).send_keys(
-                        "//storage//emulated//0//Download//" + x["photo_name"])
+                    WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.NAME, 'file1'))).send_keys("//storage//emulated//0//Download//" + x["photo_name"])
                 except:
                     pass
                 try:
-                    WebDriverWait(driver, 20).until(
-                        EC.visibility_of_element_located((By.NAME, 'add_photo_done'))).click()
+                    WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.NAME, 'add_photo_done'))).click()
                 except:
                     pass
                 try:
@@ -348,7 +347,7 @@ def device_tasks(device):
 
             # Join Group
             if x["Join Group"] == "yes":
-                for join_group in x["Group_Link"].split(" "):
+                for join_group in x["join_Group_Link"].split(" "):
                     while True:
                         try:
                             driver.get(join_group)
@@ -436,7 +435,7 @@ def device_tasks(device):
                     except:
                         pass
                     try:
-                        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.LINK_TEXT, reaction))).click()
+                        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.LINK_TEXT, reaction)))
                         print(x["deviceID"] + " " + x["profile"] + " " + o + " " + reaction + " " + "React Done")
                     except:
                         pass
