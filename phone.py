@@ -336,15 +336,6 @@ def device_tasks(device):
                         WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Like'))).click()
                     except:
                         pass
-                    try:
-                        WebDriverWait(driver, 6).until(
-                            EC.visibility_of_element_located((By.LINK_TEXT, 'Share'))).click()
-                    except:
-                        pass
-                    try:
-                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Share"]'))).click()
-                    except:
-                        pass
 
             # Join Group
             if x["Join Group"] == "yes":
