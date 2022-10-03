@@ -337,6 +337,11 @@ def device_tasks(device):
                     except:
                         pass
 
+                    try:
+                        WebDriverWait(driver, 3).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Follow'))).click()
+                    except:
+                        pass
+
             # Join Group
             if x["Join Group"] == "yes":
                 for join_group in x["join_Group_Link"].split(" "):
