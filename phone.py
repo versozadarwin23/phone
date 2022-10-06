@@ -236,16 +236,17 @@ def device_tasks(device):
                     WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.NAME, "email")))
                     break
                 except:
-                    try:
-                        airplane_mode_on(device)
-                        time.sleep(10)
-                    except:
-                        pass
-                    try:
-                        airplane_mode_off(device)
-                        time.sleep(15)
-                    except:
-                        pass
+                    pass
+#                     try:
+#                         airplane_mode_on(device)
+#                         time.sleep(10)
+#                     except:
+#                         pass
+#                     try:
+#                         airplane_mode_off(device)
+#                         time.sleep(15)
+#                     except:
+#                         pass
 
             while True:
                 try:
@@ -483,12 +484,12 @@ def device_tasks(device):
             except:
                 pass
 
-            if device["platformVersion"] == "5.1":
-                try:
-                    airplane_mode_on(device)
-                    time.sleep(6)
-                except:
-                    pass
+#             if device["platformVersion"] == "5.1":
+#                 try:
+#                     airplane_mode_on(device)
+#                     time.sleep(6)
+#                 except:
+#                     pass
 
 
 if __name__ == "__main__":  # confirms that the code is under main function
