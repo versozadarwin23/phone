@@ -493,7 +493,6 @@ def device_tasks(device):
 
 if __name__ == "__main__":  # confirms that the code is under main function
     for i in phones_sheet:
-        proc = Process(target=device_
-                       s, args=(i,))
+        proc = Process(target=device_tasks, args=(i,))
         proc.start()
         time.sleep(10)
