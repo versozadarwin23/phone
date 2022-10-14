@@ -337,7 +337,7 @@ def device_tasks(device):
                         pass
 
                     try:
-                        WebDriverWait(driver, 3).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Follow'))).click()
+                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Follow'))).click()
                     except:
                         pass
 
