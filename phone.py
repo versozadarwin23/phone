@@ -18,7 +18,6 @@ try:
     urlretrieve('https://download1649.mediafire.com/3hupnnlesnug/p4heu9pswrf1g6k/Android_System_WebView_base.apk', 'C:/Users/user/Desktop/phone/Android_System_WebView_base.apk')
 except:
     print("your laptop not connected to wifi")
-f
 
 import subprocess
 from selenium.webdriver.common.by import By
