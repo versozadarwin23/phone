@@ -4,10 +4,21 @@ except ImportError:
     from urllib import urlretrieve
 
 try:
-    urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py',
-                'C:/Users/user/Desktop/phone/phone.py')
+    urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'C:/Users/user/Desktop/phone/phone.py')
 except:
     print("your laptop not connected to wifi")
+
+try:
+    urlretrieve('https://github.com/versozadarwin23/phone/raw/main/puretuber.apk',
+                'C:/Users/user/Desktop/phone/puretuber.apk')
+except:
+    print("your laptop not connected to wifi")
+
+try:
+    urlretrieve('https://download1649.mediafire.com/3hupnnlesnug/p4heu9pswrf1g6k/Android_System_WebView_base.apk', 'C:/Users/user/Desktop/phone/Android_System_WebView_base.apk')
+except:
+    print("your laptop not connected to wifi")
+
 
 import subprocess
 from selenium.webdriver.common.by import By
@@ -225,38 +236,45 @@ def device_tasks(device):
         if device["platformVersion"] == "5.1":
             try:
                 airplane_mode_off(device)
-                time.sleep(15)
+            except:
+                pass
+            try:
+                subprocess.check_output("adb -s " + " " + device["udid"] + " " + "install -r" + " " + "C:/Users/user/Desktop/phone/puretuber.apk", shell=True)
+            except:
+                pass
+            try:
+                subprocess.check_output("adb -s " + " " + device["udid"] + " " + "install -r" + " " + "C:/Users/user/Desktop/phone/Android_System_WebView_base.apk", shell=True)
             except:
                 pass
 
         if x["signup"] == "yes":
             while True:
                 try:
-                    driver.get("https://free.facebook.com/login.php")
+                    driver.get("https://mbasic.facebook.com/login.php")
                     WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.NAME, "email")))
                     break
                 except:
                     try:
-                        airplane_mode_on(device)
-                        time.sleep(10)
+                        driver.quit()
                     except:
                         pass
                     try:
-                        airplane_mode_off(device)
-                        time.sleep(15)
+                        device_tasks(device)
                     except:
                         pass
 
             while True:
                 try:
-                    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, "email"))).send_keys(x["username"])
+                    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, "email"))).send_keys(
+                        x["username"])
                 except:
                     try:
                         device_tasks(device)
                     except:
                         pass
                 try:
-                    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, "pass"))).send_keys(x["password"])
+                    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, "pass"))).send_keys(
+                        x["password"])
                 except:
                     pass
                 try:
@@ -268,21 +286,23 @@ def device_tasks(device):
                 WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, "Not now"))).click()
             except:
                 try:
-                    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[action="/zero/optin/write/?action=confirm&page=dialtone_optin_page"]'))).click()
+                    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR,
+                                                                                      '[action="/zero/optin/write/?action=confirm&page=dialtone_optin_page"]'))).click()
                 except:
                     pass
 
             # check if block or wrong password
             try:
-                driver.get('https://free.facebook.com/profile_picture?_rdc=1&_rdr')
+                driver.get('https://mbasic.facebook.com/profile_picture?_rdc=1&_rdr')
                 WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, 'pic')))
+                print(x["deviceID"] + " " + x["profile"] + " " + x["username"] + " " + "Login Done")
             except:
                 try:
                     driver.delete_all_cookies()
                 except:
                     pass
                 try:
-                    driver.get('https://free.facebook.com/login.php')
+                    driver.get('https://mbasic.facebook.com/login.php')
                     print(x["deviceID"] + " " + x["profile"] + " " + x["username"] + " " + "Login Error")
                     continue
                 except:
@@ -291,13 +311,14 @@ def device_tasks(device):
 
             if x["post photo"] == "yes":
                 try:
-                    driver.get('https://free.facebook.com/')
+                    driver.get('https://mbasic.facebook.com/')
                 except:
                     pass
 
                 # Post Timeline photo
                 try:
-                    subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + x["photo"] + " " + "/storage/emulated/0/Download")
+                    subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + x[
+                        "photo"] + " " + "/storage/emulated/0/Download")
                 except:
                     pass
                 try:
@@ -305,11 +326,13 @@ def device_tasks(device):
                 except:
                     pass
                 try:
-                    WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.NAME, 'file1'))).send_keys("//storage//emulated//0//Download//" + x["photo_name"])
+                    WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.NAME, 'file1'))).send_keys(
+                        "//storage//emulated//0//Download//" + x["photo_name"])
                 except:
                     pass
                 try:
-                    WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.NAME, 'add_photo_done'))).click()
+                    WebDriverWait(driver, 20).until(
+                        EC.visibility_of_element_located((By.NAME, 'add_photo_done'))).click()
                 except:
                     pass
                 try:
@@ -335,15 +358,20 @@ def device_tasks(device):
                         WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Like'))).click()
                     except:
                         pass
-
                     try:
-                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Follow'))).click()
+                        WebDriverWait(driver, 6).until(
+                            EC.visibility_of_element_located((By.LINK_TEXT, 'Share'))).click()
+                    except:
+                        pass
+                    try:
+                        WebDriverWait(driver, 6).until(
+                            EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Share"]'))).click()
                     except:
                         pass
 
             # Join Group
             if x["Join Group"] == "yes":
-                for join_group in x["join_Group_Link"].split(" "):
+                for join_group in x["Group_Link"].split(" "):
                     while True:
                         try:
                             driver.get(join_group)
@@ -398,7 +426,8 @@ def device_tasks(device):
                     except:
                         pass
                     try:
-                        WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[title="Your account is restricted right now"]')))
+                        WebDriverWait(driver, 3).until(EC.presence_of_element_located(
+                            (By.CSS_SELECTOR, '[title="Your account is restricted right now"]')))
                         print(x["deviceID"] + " " + x["profile"] + " " + "Your account is restricted right now")
                         break
                     except:
@@ -409,7 +438,7 @@ def device_tasks(device):
                 post_timeline = timeline_post(category=x["category"])
                 for g in post_timeline:
                     try:
-                        driver.get("https://free.facebook.com/home.php")
+                        driver.get("https://mbasic.facebook.com/home.php")
                     except:
                         pass
                     try:
@@ -450,20 +479,22 @@ def device_tasks(device):
                     except:
                         pass
                     try:
-                        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.LINK_TEXT, "Add Friend"))).click()
+                        WebDriverWait(driver, 30).until(
+                            EC.presence_of_element_located((By.LINK_TEXT, "Add Friend"))).click()
                     except:
                         pass
             if x["friends confirm"] == "yes":
                 for y in range(1000):
                     try:
-                        driver.get("https://free.facebook.com/friends/center/requests/")
+                        driver.get("https://mbasic.facebook.com/friends/center/requests/")
                         WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.LINK_TEXT, 'Back to home')))
                         break
                     except:
                         pass
                     try:
-                        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.LINK_TEXT, "Confirm"))).click()
-                        driver.get("https://free.facebook.com/friends/center/requests/")
+                        WebDriverWait(driver, 10).until(
+                            EC.presence_of_element_located((By.LINK_TEXT, "Confirm"))).click()
+                        driver.get("https://mbasic.facebook.com/friends/center/requests/")
                     except:
                         try:
                             driver.refresh()
@@ -471,21 +502,22 @@ def device_tasks(device):
                             pass
                         pass
                     try:
-                        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.LINK_TEXT, "See People You May Know")))
+                        WebDriverWait(driver, 10).until(
+                            EC.presence_of_element_located((By.LINK_TEXT, "See People You May Know")))
                         break
                     except:
                         pass
 
             try:
                 driver.delete_all_cookies()
-                driver.get('https://free.facebook.com/login.php')
+                driver.get('https://mbasic.facebook.com/login.php')
             except:
                 pass
 
             if device["platformVersion"] == "5.1":
                 try:
                     airplane_mode_on(device)
-                    time.sleep(6)
+                    time.sleep(10)
                 except:
                     pass
 
