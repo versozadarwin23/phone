@@ -6,7 +6,7 @@ except ImportError:
 try:
     urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'C:/Users/user/Desktop/phone/phone.py')
 except:
-    print("your laptop not connected to wifi")n
+    print("your laptop not connected to wifi")
 
 import subprocess
 from selenium.webdriver.common.by import By
