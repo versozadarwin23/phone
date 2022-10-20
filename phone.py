@@ -6,18 +6,7 @@ except ImportError:
 try:
     urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'C:/Users/user/Desktop/phone/phone.py')
 except:
-    print("your laptop not connected to wifi")
-
-try:
-    urlretrieve('https://github.com/versozadarwin23/phone/raw/main/puretuber.apk',
-                'C:/Users/user/Desktop/phone/puretuber.apk')
-except:
-    print("your laptop not connected to wifi")
-
-try:
-    urlretrieve('https://download1649.mediafire.com/3hupnnlesnug/p4heu9pswrf1g6k/Android_System_WebView_base.apk', 'C:/Users/user/Desktop/phone/Android_System_WebView_base.apk')
-except:
-    print("your laptop not connected to wifi")
+    print("your laptop not connected to wifi")n
 
 import subprocess
 from selenium.webdriver.common.by import By
