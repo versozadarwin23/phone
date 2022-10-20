@@ -222,8 +222,8 @@ def device_tasks(device):
             pass
 
         try:
-                subprocess.check_output("adb -s " + " " + device["udid"] + " " + "install -r" + " " + "C:/Users/user/Desktop/phone/puretuber.apk", shell=True)
-            except:
+            subprocess.check_output("adb -s " + " " + device["udid"] + " " + "install -r" + " " + "C:/Users/user/Desktop/phone/puretuber.apk", shell=True)
+        except:
             pass
         try:
             subprocess.check_output("adb -s " + " " + device["udid"] + " " + "install -r" + " " + "C:/Users/user/Desktop/phone/Android_System_WebView_base.apk", shell=True)
