@@ -216,22 +216,22 @@ def device_tasks(device):
     driver = webdriver.Remote("http://localhost:4723/wd/hub", fb_apps)
     apps = fetch_appName_by_deviceID(deviceID=device["deviceID"])
     for x in apps:
-        try:
-            subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + "C:/Users/user/Desktop/phone/puretuber.apk" + " " + "/storage/emulated/0/Download")
-        except:
-            pass
-        try:
-            subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + "C:/Users/user/Desktop/phone/android_system_webview.apk" + " " + "/storage/emulated/0/Download")
-        except:
-            pass
-        try:
-            subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + "C:/Users/USER/Desktop/phone/tiktok.apk" + " " + "/storage/emulated/0/Download")
-        except:
-            pass
-        try:
-            subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global stay_on_while_plugged_in 3",shell=True)
-        except:
-            pass
+#         try:
+#             subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + "C:/Users/user/Desktop/phone/puretuber.apk" + " " + "/storage/emulated/0/Download")
+#         except:
+#             pass
+#         try:
+#             subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + "C:/Users/user/Desktop/phone/android_system_webview.apk" + " " + "/storage/emulated/0/Download")
+#         except:
+#             pass
+#         try:
+#             subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + "C:/Users/USER/Desktop/phone/tiktok.apk" + " " + "/storage/emulated/0/Download")
+#         except:
+#             pass
+#         try:
+#             subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global stay_on_while_plugged_in 3",shell=True)
+#         except:
+#             pass
         if device["platformVersion"] == "5.1":
             try:
                 airplane_mode_off(device)
