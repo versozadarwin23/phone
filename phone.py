@@ -4,14 +4,15 @@ except ImportError:
     from urllib import urlretrieve
 
 try:
-    urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'C:/Users/user/Desktop/phone/phone.py')
+    urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py',
+                'C:/Users/user/Desktop/phone/phone.py')
 except:
     pass
 
-try:
-    urlretrieve('https://github.com/versozadarwin23/phone/raw/main/puretuber.apk','C:/Users/user/Desktop/phone/puretuber.apk')
-except:
-    pass
+# try:
+#     urlretrieve('https://github.com/versozadarwin23/phone/raw/main/puretuber.apk','C:/Users/user/Desktop/phone/puretuber.apk')
+# except:
+#     pass
 
 import subprocess
 from selenium.webdriver.common.by import By
@@ -220,14 +221,16 @@ def device_tasks(device):
     )
     apps = fetch_appName_by_deviceID(deviceID=device["deviceID"])
     for x in apps:
-        if device["platformVersion"] == "8.1.0":
-            try:
-                subprocess.check_output("adb -s " + " " + device["udid"] + " " + "install -r " + "C:/Users/user/Desktop/phone/puretuber.apk", shell=True)
-            except:
-                pass
+        #         if device["platformVersion"] == "8.1.0":
+        #             try:
+        #                 subprocess.check_output("adb -s " + " " + device["udid"] + " " + "install -r " + "C:/Users/user/Desktop/phone/puretuber.apk", shell=True)
+        #             except:
+        #                 pass
 
         try:
-            subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global stay_on_while_plugged_in 3",shell=True)
+            subprocess.check_output(
+                "adb -s " + " " + device["udid"] + " " + "shell settings put global stay_on_while_plugged_in 3",
+                shell=True)
         except:
             pass
 
@@ -238,14 +241,14 @@ def device_tasks(device):
                 airplane_mode_off(device)
             except:
                 pass
-            try:
-                subprocess.check_output("adb -s " + " " + device["udid"] + " " + "install -r" + " " + "C:/Users/user/Desktop/phone/puretuber.apk", shell=True)
-            except:
-                pass
-            try:
-                subprocess.check_output("adb -s " + " " + device["udid"] + " " + "install -r" + " " + "C:/Users/user/Desktop/phone/Android_System_WebView_base.apk", shell=True)
-            except:
-                pass
+        #             try:
+        #                 subprocess.check_output("adb -s " + " " + device["udid"] + " " + "install -r" + " " + "C:/Users/user/Desktop/phone/puretuber.apk", shell=True)
+        #             except:
+        #                 pass
+        #             try:
+        #                 subprocess.check_output("adb -s " + " " + device["udid"] + " " + "install -r" + " " + "C:/Users/user/Desktop/phone/Android_System_WebView_base.apk", shell=True)
+        #             except:
+        #                 pass
 
         if x["signup"] == "yes":
             while True:
@@ -354,9 +357,10 @@ def device_tasks(device):
                         print(x["deviceID"] + " " + x["profile"] + " " + like_page + " " + "Like Page Done")
                     except:
                         pass
-                    
+
                     try:
-                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Follow'))).click()
+                        WebDriverWait(driver, 6).until(
+                            EC.visibility_of_element_located((By.LINK_TEXT, 'Follow'))).click()
                         print(x["deviceID"] + " " + x["profile"] + " " + like_page + " " + "Follow Page Done")
                     except:
                         pass
@@ -467,12 +471,14 @@ def device_tasks(device):
                     except:
                         pass
                     try:
-                        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.LINK_TEXT, reaction))).click()
+                        WebDriverWait(driver, 10).until(
+                            EC.presence_of_element_located((By.LINK_TEXT, reaction))).click()
                         print(x["deviceID"] + " " + x["profile"] + " " + o + " " + reaction + " " + "React Done")
                     except:
                         pass
                     try:
-                        WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[title="Your account is restricted right now"]')))
+                        WebDriverWait(driver, 3).until(EC.presence_of_element_located(
+                            (By.CSS_SELECTOR, '[title="Your account is restricted right now"]')))
                         print(x["deviceID"] + " " + x["profile"] + " " + "Your account is restricted right now")
                         break
                     except:
