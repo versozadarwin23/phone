@@ -274,7 +274,6 @@ def device_tasks(device):
             try:
                 driver.get('https://free.facebook.com/profile_picture?_rdc=1&_rdr')
                 WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, 'pic')))
-                print(x["deviceID"] + " " + x["profile"] + " " + x["username"] + " " + "Login Done")
             except:
                 try:
                     driver.delete_all_cookies()
@@ -335,7 +334,7 @@ def device_tasks(device):
                         pass
 
                     try:
-                        WebDriverWait(driver, 6).until(
+                        WebDriverWait(driver, 3).until(
                             EC.visibility_of_element_located((By.LINK_TEXT, 'Follow'))).click()
                         print(x["deviceID"] + " " + x["profile"] + " " + like_page + " " + "Follow Page Done")
                     except:
