@@ -218,18 +218,20 @@ def device_tasks(device):
         chromedriverExecutable="C:/Users/USER/Desktop/phone/chromedriver/" + device["chromedriver"] + ".exe",
         newCommandTimeout='96000',
     )
-    driver = webdriver.Remote("http://localhost:4723/wd/hub", fb_apps)
     apps = fetch_appName_by_deviceID(deviceID=device["deviceID"])
     for x in apps:
+        if device["platformVersion"] == "8.1.0":
+            try:
+                subprocess.check_output("adb -s " + " " + device["udid"] + " " + "install -r " + "C:/Users/user/Desktop/phone/puretuber.apk", shell=True)
+            except:
+                pass
+
         try:
             subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global stay_on_while_plugged_in 3",shell=True)
         except:
             pass
 
-        try:
-            subprocess.check_output("adb -s " + " " + device["udid"] + " " + "install -r " + "C:/Users/user/Desktop/phone/puretuber.apk", shell=True)
-        except:
-            pass
+        driver = webdriver.Remote("http://localhost:4723/wd/hub", fb_apps)
 
         if device["platformVersion"] == "5.1":
             try:
