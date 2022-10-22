@@ -9,6 +9,7 @@ try:
 except:
     pass
 
+
 import subprocess
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -216,16 +217,18 @@ def device_tasks(device):
     )
     driver = webdriver.Remote("http://localhost:4723/wd/hub", fb_apps)
     apps = fetch_appName_by_deviceID(deviceID=device["deviceID"])
+    try:
+        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global stay_on_while_plugged_in 3", shell=True)
+    except:
+        pass
     for x in apps:
-        try:
-            subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global stay_on_while_plugged_in 3", shell=True)
-        except:
-            pass
         if device["platformVersion"] == "5.1":
             try:
                 airplane_mode_off(device)
+                time.sleep(15)
             except:
                 pass
+
         if x["signup"] == "yes":
             while True:
                 try:
@@ -265,8 +268,7 @@ def device_tasks(device):
                 WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, "Not now"))).click()
             except:
                 try:
-                    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR,
-                                                                                      '[action="/zero/optin/write/?action=confirm&page=dialtone_optin_page"]'))).click()
+                    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[action="/zero/optin/write/?action=confirm&page=dialtone_optin_page"]'))).click()
                 except:
                     pass
 
@@ -339,6 +341,21 @@ def device_tasks(device):
                         print(x["deviceID"] + " " + x["profile"] + " " + like_page + " " + "Follow Page Done")
                     except:
                         pass
+
+                    # try:
+                    #     WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Like'))).click()
+                    # except:
+                    #     pass
+                    # try:
+                    #     WebDriverWait(driver, 6).until(
+                    #         EC.visibility_of_element_located((By.LINK_TEXT, 'Share'))).click()
+                    # except:
+                    #     pass
+                    # try:
+                    #     WebDriverWait(driver, 6).until(
+                    #         EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Share"]'))).click()
+                    # except:
+                    #     pass
 
             # Join Group
             if x["Join Group"] == "yes":
@@ -483,7 +500,6 @@ def device_tasks(device):
 
             try:
                 driver.delete_all_cookies()
-                driver.get('https://free.facebook.com/login.php')
             except:
                 pass
 
