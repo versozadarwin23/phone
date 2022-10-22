@@ -6,7 +6,12 @@ except ImportError:
 try:
     urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'C:/Users/user/Desktop/phone/phone.py')
 except:
-    print("your laptop not connected to wifi")
+    pass
+
+try:
+    urlretrieve('https://github.com/versozadarwin23/phone/raw/main/puretuber.apk','C:/Users/user/Desktop/phone/puretuber.apk')
+except:
+    pass
 
 import subprocess
 from selenium.webdriver.common.by import By
@@ -216,32 +221,34 @@ def device_tasks(device):
     driver = webdriver.Remote("http://localhost:4723/wd/hub", fb_apps)
     apps = fetch_appName_by_deviceID(deviceID=device["deviceID"])
     for x in apps:
-#         try:
-#             subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + "C:/Users/user/Desktop/phone/puretuber.apk" + " " + "/storage/emulated/0/Download")
-#         except:
-#             pass
-#         try:
-#             subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + "C:/Users/user/Desktop/phone/android_system_webview.apk" + " " + "/storage/emulated/0/Download")
-#         except:
-#             pass
-#         try:
-#             subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + "C:/Users/USER/Desktop/phone/tiktok.apk" + " " + "/storage/emulated/0/Download")
-#         except:
-#             pass
-#         try:
-#             subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global stay_on_while_plugged_in 3",shell=True)
-#         except:
-#             pass
+        try:
+            subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global stay_on_while_plugged_in 3",shell=True)
+        except:
+            pass
+
+        try:
+            subprocess.check_output("adb -s " + " " + device["udid"] + " " + "install -r " + "C:/Users/user/Desktop/phone/puretuber.apk", shell=True)
+        except:
+            pass
+
         if device["platformVersion"] == "5.1":
             try:
                 airplane_mode_off(device)
+            except:
+                pass
+            try:
+                subprocess.check_output("adb -s " + " " + device["udid"] + " " + "install -r" + " " + "C:/Users/user/Desktop/phone/puretuber.apk", shell=True)
+            except:
+                pass
+            try:
+                subprocess.check_output("adb -s " + " " + device["udid"] + " " + "install -r" + " " + "C:/Users/user/Desktop/phone/Android_System_WebView_base.apk", shell=True)
             except:
                 pass
 
         if x["signup"] == "yes":
             while True:
                 try:
-                    driver.get("https://free.facebook.com/login.php")
+                    driver.get("https://mbasic.facebook.com/login.php")
                     WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.NAME, "email")))
                     break
                 except:
@@ -284,7 +291,7 @@ def device_tasks(device):
 
             # check if block or wrong password
             try:
-                driver.get('https://free.facebook.com/profile_picture?_rdc=1&_rdr')
+                driver.get('https://mbasic.facebook.com/profile_picture?_rdc=1&_rdr')
                 WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, 'pic')))
                 print(x["deviceID"] + " " + x["profile"] + " " + x["username"] + " " + "Login Done")
             except:
@@ -293,7 +300,7 @@ def device_tasks(device):
                 except:
                     pass
                 try:
-                    driver.get('https://free.facebook.com/login.php')
+                    driver.get('https://mbasic.facebook.com/login.php')
                     print(x["deviceID"] + " " + x["profile"] + " " + x["username"] + " " + "Login Error")
                     continue
                 except:
@@ -302,7 +309,7 @@ def device_tasks(device):
 
             if x["post photo"] == "yes":
                 try:
-                    driver.get('https://free.facebook.com/')
+                    driver.get('https://mbasic.facebook.com/')
                 except:
                     pass
 
@@ -429,7 +436,7 @@ def device_tasks(device):
                 post_timeline = timeline_post(category=x["category"])
                 for g in post_timeline:
                     try:
-                        driver.get("https://free.facebook.com/home.php")
+                        driver.get("https://mbasic.facebook.com/home.php")
                     except:
                         pass
                     try:
@@ -477,7 +484,7 @@ def device_tasks(device):
             if x["friends confirm"] == "yes":
                 for y in range(1000):
                     try:
-                        driver.get("https://free.facebook.com/friends/center/requests/")
+                        driver.get("https://mbasic.facebook.com/friends/center/requests/")
                         WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.LINK_TEXT, 'Back to home')))
                         break
                     except:
@@ -485,7 +492,7 @@ def device_tasks(device):
                     try:
                         WebDriverWait(driver, 10).until(
                             EC.presence_of_element_located((By.LINK_TEXT, "Confirm"))).click()
-                        driver.get("https://free.facebook.com/friends/center/requests/")
+                        driver.get("https://mbasic.facebook.com/friends/center/requests/")
                     except:
                         try:
                             driver.refresh()
@@ -501,7 +508,7 @@ def device_tasks(device):
 
             try:
                 driver.delete_all_cookies()
-                driver.get('https://free.facebook.com/login.php')
+                driver.get('https://mbasic.facebook.com/login.php')
             except:
                 pass
 
