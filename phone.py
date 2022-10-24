@@ -8,6 +8,7 @@ try:
 except:
     pass
 
+import os
 import subprocess
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -215,16 +216,23 @@ def device_tasks(device):
     )
     driver = webdriver.Remote("http://localhost:4723/wd/hub", fb_apps)
     apps = fetch_appName_by_deviceID(deviceID=device["deviceID"])
+    if os.path.getsize("C:/Users/USER/Desktop/phone/puretuber.apk") == 24290389:
+        print('dawdwa')
     try:
         subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global stay_on_while_plugged_in 3", shell=True)
     except:
         pass
     for x in apps:
         if device["platformVersion"] == "8.1.0":
-            try:
-                urlretrieve('https://github.com/versozadarwin23/phone/raw/main/puretuber.apk', 'C:/Users/user/Desktop/phone/puretuber.apk')
-            except:
-                pass
+            while True:
+                try:
+                    if os.path.getsize("C:/Users/USER/Desktop/phone/puretuber.apk") == 24290389:
+                        break
+                except:
+                    try:
+                        urlretrieve('https://github.com/versozadarwin23/phone/raw/main/puretuber.apk', 'C:/Users/user/Desktop/phone/puretuber.apk')
+                    except:
+                        pass
             try:
                 subprocess.check_output("adb -s " + " " + device["udid"] + " " + "install C:/Users/USER/Desktop/phone/puretuber.apk", shell=True)
             except:
