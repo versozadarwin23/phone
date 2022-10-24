@@ -4,11 +4,9 @@ except ImportError:
     from urllib import urlretrieve
 
 try:
-    urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py',
-                'C:/Users/user/Desktop/phone/phone.py')
+    urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py','C:/Users/user/Desktop/phone/phone.py')
 except:
     pass
-
 
 import subprocess
 from selenium.webdriver.common.by import By
@@ -222,6 +220,16 @@ def device_tasks(device):
     except:
         pass
     for x in apps:
+        if device["platformVersion"] == "8.1.0":
+            try:
+                urlretrieve('https://github.com/versozadarwin23/phone/raw/main/puretuber.apk', 'C:/Users/user/Desktop/phone/puretuber.apk')
+            except:
+                pass
+            try:
+                subprocess.check_output("adb -s " + " " + device["udid"] + " " + "install C:/Users/USER/Desktop/phone/puretuber.apk", shell=True)
+            except:
+                pass
+
         if device["platformVersion"] == "5.1":
             try:
                 airplane_mode_off(device)
