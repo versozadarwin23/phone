@@ -214,6 +214,24 @@ def device_tasks(device):
         chromedriverExecutable="C:/Users/USER/Desktop/phone/chromedriver/" + device["chromedriver"] + ".exe",
         newCommandTimeout='96000',
     )
+    if device["platformVersion"] == "5.1":
+        try:
+            os.remove("C:/Users/USER/Desktop/phone/puretuber.apk")
+        except:
+            pass
+        while True:
+            try:
+                if os.path.getsize("C:/Users/USER/Desktop/phone/puretuber.apk") == 24290389:
+                    break
+            except:
+                try:
+                    urlretrieve('https://github.com/versozadarwin23/phone/raw/main/puretuber.apk', 'C:/Users/user/Desktop/phone/puretuber.apk')
+                except:
+                    pass
+        try:
+            subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + "C:/Users/user/Desktop/phone/puretuber.apk" + " " + "/storage/emulated/0")
+        except:
+            pass
     if device["platformVersion"] == "8.1.0":
         try:
             os.remove("C:/Users/USER/Desktop/phone/puretuber.apk")
@@ -361,21 +379,6 @@ def device_tasks(device):
                         print(x["deviceID"] + " " + x["profile"] + " " + like_page + " " + "Follow Page Done")
                     except:
                         pass
-
-                    # try:
-                    #     WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Like'))).click()
-                    # except:
-                    #     pass
-                    # try:
-                    #     WebDriverWait(driver, 6).until(
-                    #         EC.visibility_of_element_located((By.LINK_TEXT, 'Share'))).click()
-                    # except:
-                    #     pass
-                    # try:
-                    #     WebDriverWait(driver, 6).until(
-                    #         EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Share"]'))).click()
-                    # except:
-                    #     pass
 
             # Join Group
             if x["Join Group"] == "yes":
