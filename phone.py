@@ -2,6 +2,10 @@ try:
     from urllib.request import urlretrieve
 except ImportError:
     from urllib import urlretrieve
+try:
+    urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'C:/Users/user/Desktop/phone/phone.py')
+except:
+    pass
 
 import os
 import subprocess
@@ -249,10 +253,6 @@ def device_tasks(device):
     except:
         pass
     for x in apps:
-        try:
-            urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py','C:/Users/user/Desktop/phone/phone.py')
-        except:
-            pass
         if device["platformVersion"] == "5.1":
             try:
                 airplane_mode_off(device)
@@ -396,13 +396,11 @@ def device_tasks(device):
                 for comments in x["comment link"].split(" "):
                     driver.get(comments)
                     try:
-                        WebDriverWait(driver, 20).until(
-                            EC.visibility_of_element_located((By.ID, 'composerInput'))).send_keys(comment)
+                        WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.ID, 'composerInput'))).send_keys(comment)
                     except:
                         pass
                     try:
-                        WebDriverWait(driver, 10).until(
-                            EC.presence_of_element_located((By.CSS_SELECTOR, '[value="Comment"]'))).click()
+                        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[value="Comment"]'))).click()
                         print(x["deviceID"] + " " + x["profile"] + " " + comments + " " + "Comment done")
                     except:
                         pass
