@@ -3,11 +3,6 @@ try:
 except ImportError:
     from urllib import urlretrieve
 
-try:
-    urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py','C:/Users/user/Desktop/phone/phone.py')
-except:
-    pass
-
 import os
 import subprocess
 from selenium.webdriver.common.by import By
@@ -171,29 +166,23 @@ def get_reaction_by_link(link):
 
 def airplane_mode_off(device):
     try:
-        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global airplane_mode_on 0",
-                                shell=True)
+        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global airplane_mode_on 0",shell=True)
     except:
         pass
     try:
-        subprocess.check_output("adb -s " + " " + device[
-            "udid"] + " " + "shell am broadcast -a android.intent.action.AIRPLANE_MODE --ez state false", shell=True)
+        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell am broadcast -a android.intent.action.AIRPLANE_MODE --ez state false", shell=True)
     except:
         pass
-
 
 def airplane_mode_on(device):
     try:
-        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global airplane_mode_on 1",
-                                shell=True)
+        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global airplane_mode_on 1",shell=True)
     except:
         pass
     try:
-        subprocess.check_output("adb -s " + " " + device[
-            "udid"] + " " + "shell am broadcast -a android.intent.action.AIRPLANE_MODE --ez state true", shell=True)
+        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell am broadcast -a android.intent.action.AIRPLANE_MODE --ez state true", shell=True)
     except:
         pass
-
 
 def device_tasks(device):
     fb_apps = dict(
@@ -260,6 +249,10 @@ def device_tasks(device):
     except:
         pass
     for x in apps:
+        try:
+            urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py','C:/Users/user/Desktop/phone/phone.py')
+        except:
+            pass
         if device["platformVersion"] == "5.1":
             try:
                 airplane_mode_off(device)
