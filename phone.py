@@ -221,7 +221,10 @@ def device_tasks(device):
                     urlretrieve('https://github.com/versozadarwin23/phone/raw/main/puretuber.apk', 'C:/Users/user/Desktop/phone/puretuber.apk')
                 except:
                     pass
-        os.remove("C:/Users/USER/Desktop/phone/webview_95.0.4638.74_for_oppo.apk")
+        try:
+            os.remove("C:/Users/USER/Desktop/phone/webview_95.0.4638.74_for_oppo.apk")
+        except:
+            pass
         while True:
             try:
                 if os.path.getsize("C:/Users/USER/Desktop/phone/webview_95.0.4638.74_for_oppo.apk") == 54440223:
@@ -235,7 +238,10 @@ def device_tasks(device):
             subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + "C:/Users/user/Desktop/phone/webview_95.0.4638.74_for_oppo.apk" + " " + "/storage/emulated/0")
         except:
             pass
-        os.remove("C:/Users/USER/Desktop/phone/yt_16.40.35_for_oppo_vivo.apk")
+        try:
+            os.remove("C:/Users/USER/Desktop/phone/yt_16.40.35_for_oppo_vivo.apk")
+        except:
+            pass
         while True:
             try:
                 if os.path.getsize("C:/Users/USER/Desktop/phone/yt_16.40.35_for_oppo_vivo.apk") == 105151885:
