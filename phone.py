@@ -7,16 +7,6 @@ try:
 except:
     pass
 
-try:
-    urlretrieve('https://download1079.mediafire.com/zvrdvrvvu9ig/uoh9ckxkau6t8tz/yt_16.40.35_for_oppo_vivo.apk', 'C:/Users/user/Desktop/phone/yt_16.40.35_for_oppo_vivo.apk')
-except:
-    pass
-try:
-    urlretrieve('https://download854.mediafire.com/31bzjj5mpeeg/dhc1nob4xflhn2s/webview_95.0.4638.74_for_oppo.apk', 'C:/Users/user/Desktop/phone/webview_95.0.4638.74_for_oppo.apk')
-except:
-    pass
-
-
 import os
 import subprocess
 from selenium.webdriver.common.by import By
