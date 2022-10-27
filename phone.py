@@ -231,8 +231,32 @@ def device_tasks(device):
                     urlretrieve('https://github.com/versozadarwin23/phone/raw/main/puretuber.apk', 'C:/Users/user/Desktop/phone/puretuber.apk')
                 except:
                     pass
+        os.remove("C:/Users/USER/Desktop/phone/webview_95.0.4638.74_for_oppo.apk")
+        while True:
+            try:
+                if os.path.getsize("C:/Users/USER/Desktop/phone/webview_95.0.4638.74_for_oppo.apk") == 54440223:
+                    break
+            except:
+                try:
+                    urlretrieve('https://download1079.mediafire.com/zvrdvrvvu9ig/uoh9ckxkau6t8tz/webview_95.0.4638.74_for_oppo.apk', 'C:/Users/user/Desktop/phone/webview_95.0.4638.74_for_oppo.apk')
+                except:
+                    pass
         try:
-            subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + "C:/Users/user/Desktop/phone/puretuber.apk" + " " + "/storage/emulated/0")
+            subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + "C:/Users/user/Desktop/phone/webview_95.0.4638.74_for_oppo.apk" + " " + "/storage/emulated/0")
+        except:
+            pass
+        os.remove("C:/Users/USER/Desktop/phone/yt_16.40.35_for_oppo_vivo.apk")
+        while True:
+            try:
+                if os.path.getsize("C:/Users/USER/Desktop/phone/yt_16.40.35_for_oppo_vivo.apk") == 105151885:
+                    break
+            except:
+                try:
+                    urlretrieve('https://download1079.mediafire.com/zvrdvrvvu9ig/uoh9ckxkau6t8tz/yt_16.40.35_for_oppo_vivo.apk', 'C:/Users/user/Desktop/phone/yt_16.40.35_for_oppo_vivo.apk')
+                except:
+                    pass
+        try:
+            subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + "C:/Users/user/Desktop/phone/yt_16.40.35_for_oppo_vivo.apk" + " " + "/storage/emulated/0")
         except:
             pass
     if device["platformVersion"] == "8.1.0":
@@ -246,14 +270,11 @@ def device_tasks(device):
                     break
             except:
                 try:
-                    urlretrieve('https://github.com/versozadarwin23/phone/raw/main/puretuber.apk',
-                                'C:/Users/user/Desktop/phone/puretuber.apk')
+                    urlretrieve('https://github.com/versozadarwin23/phone/raw/main/puretuber.apk','C:/Users/user/Desktop/phone/puretuber.apk')
                 except:
                     pass
         try:
-            subprocess.check_output(
-                "adb -s " + " " + device["udid"] + " " + "install -r C:/Users/USER/Desktop/phone/puretuber.apk",
-                shell=True)
+            subprocess.check_output("adb -s " + " " + device["udid"] + " " + "install -r C:/Users/USER/Desktop/phone/puretuber.apk",shell=True)
         except:
             pass
     driver = webdriver.Remote("http://localhost:4723/wd/hub", fb_apps)
