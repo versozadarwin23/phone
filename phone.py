@@ -2,10 +2,6 @@ try:
     from urllib.request import urlretrieve
 except ImportError:
     from urllib import urlretrieve
-try:
-    urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'C:/Users/user/Desktop/phone/phone.py')
-except:
-    pass
 
 import os
 import subprocess
@@ -20,6 +16,18 @@ from future.utils import iteritems
 from past.builtins import xrange
 from multiprocessing import Process
 import random
+
+while True:
+    try:
+        if os.path.getsize("C:/Users/USER/Desktop/phone/puretuber.apk") == 24587:
+            break
+    except:
+        try:
+            urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'C:/Users/user/Desktop/phone/phone.py')
+            break
+        except:
+            pass
+        pass
 
 input_file = "phone.xlsx"
 sheet_names = ["Phones", "Apps", "Comments", "Timeline", "Friends", "Reactions"]
