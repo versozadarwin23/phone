@@ -224,10 +224,12 @@ def device_tasks(device):
         #puretuber
         try:
             subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + "C:/Users/USER/Desktop/phone/puretuber.apk" + " " + "/storage/emulated/0/Download")
+            print(device["deviceID"] + " " + "push file puretuber.apk")
         except:
             pass
         try:
             subprocess.check_output("adb -s " + " " + device["udid"] + " " + "install -r " + " " + "C:/Users/USER/Desktop/phone/puretuber.apk")
+            print(device["deviceID"] + " " + "install puretuber.apk")
         except:
             pass
         #yt
@@ -248,10 +250,12 @@ def device_tasks(device):
         #yt
         try:
             subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + "C:/Users/USER/Desktop/phone/yt_16.40.35_for_oppo_vivo.apk" + " " + "/storage/emulated/0/Download")
+            print(device["deviceID"] + " " + "push file yt_16.40.35_for_oppo_vivo.apk")
         except:
             pass
         try:
             subprocess.check_output("adb -s " + " " + device["udid"] + " " + "install -r " + " " + "C:/Users/USER/Desktop/phone/yt_16.40.35_for_oppo_vivo.apk")
+            print(device["deviceID"] + " " + "install yt_16.40.35_for_oppo_vivo.apk")
         except:
             pass
         #webview
@@ -267,14 +271,17 @@ def device_tasks(device):
                     pass
                 try:
                     urlretrieve('https://download854.mediafire.com/31bzjj5mpeeg/dhc1nob4xflhn2s/webview_95.0.4638.74_for_oppo.apk','C:/Users/user/Desktop/phone/webview_95.0.4638.74_for_oppo.apk')
+                    print(device["deviceID"] + " " + "downloading webview_95.0.4638.74_for_oppo.apk")
                 except:
                     pass
         try:
             subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + "C:/Users/USER/Desktop/phone/webview_95.0.4638.74_for_oppo.apk" + " " + "/storage/emulated/0/Download")
+            print(device["deviceID"] + " " + "push file webview_95.0.4638.74_for_oppo.apk")
         except:
             pass
         try:
             subprocess.check_output("adb -s " + " " + device["udid"] + " " + "install -r " + " " + "C:/Users/USER/Desktop/phone/webview_95.0.4638.74_for_oppo.apk")
+            print(device["deviceID"] + " " + "webview_95.0.4638.74_for_oppo.apk")
         except:
             pass
 
@@ -291,10 +298,13 @@ def device_tasks(device):
                     pass
                 try:
                     urlretrieve('https://github.com/versozadarwin23/phone/raw/main/puretuber.apk','C:/Users/user/Desktop/phone/puretuber.apk')
+                    print(device["deviceID"] + " " + "downloading puretuber.apk")
                 except:
                     pass
         try:
             subprocess.check_output("adb -s " + " " + device["udid"] + " " + "install -r " + " " + "C:/Users/USER/Desktop/phone/yt_16.40.35_for_oppo_vivo.apk")
+            print(device["deviceID"] + " " + "yt_16.40.35_for_oppo_vivo.apk")
+
         except:
             pass
 
