@@ -2,13 +2,10 @@ try:
     from urllib.request import urlretrieve
 except ImportError:
     from urllib import urlretrieve
-while True:
-    try:
-        urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'C:/Users/user/Desktop/phone/phone.py')
-        print("updating plss wait")
-        break
-    except:
-        pass
+try:
+    urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'C:/Users/user/Desktop/phone/phone.py')
+except:
+    pass
 
 import os
 import subprocess
