@@ -17,19 +17,17 @@ from past.builtins import xrange
 from multiprocessing import Process
 import random
 
-while True:
-    try:
-        if os.path.getsize("C:/Users/USER/Desktop/phone/puretuber.apk") == 24649:
-            break
-    except:
-        print("updating")
-        try:
-            urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'C:/Users/user/Desktop/phone/phone.py')
-            print("updating done")
-            break
-        except:
-            pass
+try:
+    if os.path.getsize("C:/Users/USER/Desktop/phone/puretuber.apk") == 24649:
         pass
+except:
+    print("updating")
+    try:
+        urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'C:/Users/user/Desktop/phone/phone.py')
+        print("updating done")
+    except:
+        pass
+    pass
 
 input_file = "phone.xlsx"
 sheet_names = ["Phones", "Apps", "Comments", "Timeline", "Friends", "Reactions"]
