@@ -5,6 +5,7 @@ except ImportError:
 while True:
     try:
         urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'C:/Users/user/Desktop/phone/phone.py')
+        print("updating plss wait")
         break
     except:
         pass
