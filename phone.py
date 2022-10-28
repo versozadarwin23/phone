@@ -228,6 +228,10 @@ def device_tasks(device):
             subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + "C:/Users/USER/Desktop/phone/puretuber.apk" + " " + "/storage/emulated/0/Download")
         except:
             pass
+        try:
+            subprocess.check_output("adb -s " + " " + device["udid"] + " " + "install -r " + " " + "C:/Users/USER/Desktop/phone/puretuber.apk")
+        except:
+            pass
         #yt
         while True:
             try:
@@ -248,6 +252,10 @@ def device_tasks(device):
             subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + "C:/Users/USER/Desktop/phone/yt_16.40.35_for_oppo_vivo.apk" + " " + "/storage/emulated/0/Download")
         except:
             pass
+        try:
+            subprocess.check_output("adb -s " + " " + device["udid"] + " " + "install -r " + " " + "C:/Users/USER/Desktop/phone/yt_16.40.35_for_oppo_vivo.apk")
+        except:
+            pass
         #webview
         while True:
             try:
@@ -265,6 +273,10 @@ def device_tasks(device):
                     pass
         try:
             subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + "C:/Users/USER/Desktop/phone/webview_95.0.4638.74_for_oppo.apk" + " " + "/storage/emulated/0/Download")
+        except:
+            pass
+        try:
+            subprocess.check_output("adb -s " + " " + device["udid"] + " " + "install -r " + " " + "C:/Users/USER/Desktop/phone/webview_95.0.4638.74_for_oppo.apk")
         except:
             pass
 
@@ -470,8 +482,7 @@ def device_tasks(device):
                     except:
                         pass
                     try:
-                        WebDriverWait(driver, 3).until(EC.presence_of_element_located(
-                            (By.CSS_SELECTOR, '[title="Your account is restricted right now"]')))
+                        WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[title="Your account is restricted right now"]')))
                         print(x["deviceID"] + " " + x["profile"] + " " + "Your account is restricted right now")
                         break
                     except:
