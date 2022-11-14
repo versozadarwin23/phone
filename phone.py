@@ -295,9 +295,20 @@ def device_tasks(device):
                         except:
                             try:
                                 WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Info'))).click()
+                            except:
+                                pass
+                            try:
+                                WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Report Group'))).click()
                                 break
                             except:
                                 pass
+
+                    while True:
+                        try:
+                            WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="RESOLVE_PROBLEM"]'))).click()
+                            break
+                        except:
+                            pass
 
                     if x["Harassment"] == "yes":
                         while True:
