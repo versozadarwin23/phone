@@ -363,10 +363,6 @@ def device_tasks(device):
                                 break
                             except:
                                 pass
-                        try:
-                            WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="misinformation_politics"]'))).click()
-                        except:
-                            pass
 
                         while True:
                             try:
@@ -374,6 +370,18 @@ def device_tasks(device):
                                 break
                             except:
                                 pass
+                        try:
+                            WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="misinformation_politics"]'))).click()
+                        except:
+                            pass
+                        
+                        while True:
+                            try:
+                                WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Submit"]'))).click()
+                                break
+                            except:
+                                pass
+
                         while True:
                             try:
                                 WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Report"]'))).click()
