@@ -303,12 +303,15 @@ def device_tasks(device):
                             except:
                                 pass
 
-                    while True:
-                        try:
-                            WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="RESOLVE_PROBLEM"]'))).click()
-                            break
-                        except:
-                            pass
+                    try:
+                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="RESOLVE_PROBLEM"]'))).click()
+                    except:
+                        pass
+                    try:
+                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Submit"]'))).click()
+                    except:
+                        pass
+
 
                     if x["Harassment"] == "yes":
                         while True:
