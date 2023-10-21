@@ -200,7 +200,7 @@ def device_tasks(device):
         skipLogcatCapture=True,
         adbExecTimeout='999999',
         udid=device["udid"],
-        chromeOptions={"w3c": False, "args": ['--disable-notifications']},
+        chromeOptions={"w3c": False, "args": ['--user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"']},
         browserName="Chrome",
         chromedriverExecutable="C:/Users/USER/Desktop/phone/chromedriver/" + device["chromedriver"] + ".exe",
         newCommandTimeout='96000',
@@ -212,17 +212,16 @@ def device_tasks(device):
     except:
         pass
     for x in apps:
-        if device["platformVersion"] == "5.1":
-            try:
-                airplane_mode_off(device)
-                time.sleep(15)
-            except:
-                pass
-
         if x["signup"] == "yes":
+            if device["platformVersion"] == "5.1":
+                try:
+                    airplane_mode_off(device)
+                    time.sleep(20)
+                except:
+                    pass
             while True:
                 try:
-                    driver.get("https://free.facebook.com/login.php")
+                    driver.get("https://free.facebook.com/")
                     WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.NAME, "email")))
                     break
                 except:
@@ -294,7 +293,7 @@ def device_tasks(device):
                             break
                         except:
                             try:
-                                WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Report Group'))).click()
+                                WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="RESOLVE_PROBLEM"]'))).click()
                                 break
                             except:
                                 pass
@@ -693,7 +692,6 @@ def device_tasks(device):
                     time.sleep(10)
                 except:
                     pass
-
 
 if __name__ == "__main__":  # confirms that the code is under main function
     for i in phones_sheet:
