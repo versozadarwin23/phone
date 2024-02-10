@@ -653,7 +653,7 @@ def device_tasks(device):
                         pass
                     try:
                         WebDriverWait(driver, 30).until(
-                            EC.presence_of_element_located((By.LINK_TEXT, "Add Friend"))).click()
+                            EC.presence_of_element_located((By.LINK_TEXT, "Add friend"))).click()
                     except:
                         pass
             if x["friends confirm"] == "yes":
