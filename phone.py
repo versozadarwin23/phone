@@ -560,6 +560,21 @@ def device_tasks(device):
                     except:
                         pass
 
+            # vote
+            if x["Vote"] == "yes":
+                for join_group in x["Vote_Link"].split(" "):
+                    while True:
+                        try:
+                            driver.get(join_group)
+                            break
+                        except:
+                            pass
+                    try:
+                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "[title=" + x["Vote_Name"] + "]"))).click()
+                        print(x["deviceID"] + " " + x["profile"] + " " + join_group + " " + "Vote Done")
+                    except:
+                        pass
+
             # comment
             if x["Comment"] == "yes":
                 options = random.choice([1, 1, 2, 2, 3, 3])
