@@ -566,14 +566,15 @@ def device_tasks(device):
                     while True:
                         try:
                             driver.get(join_group)
+                            time.sleep(5)
                             break
                         except:
                             pass
-                    try:
-                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "[title=" + x["Vote_Name"] + "]"))).click()
-                        print(x["deviceID"] + " " + x["profile"] + " " + join_group + " " + "Vote Done")
-                    except:
-                        pass
+                        try:
+                            WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.ID, x["Vote_Name"]))).click()
+                            print(x["deviceID"] + " " + x["profile"] + " " + "Vote Done")
+                        except:
+                            pass
 
             # comment
             if x["Comment"] == "yes":
