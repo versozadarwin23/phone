@@ -570,9 +570,11 @@ def device_tasks(device):
                             break
                         except:
                             pass
+                    while True:
                         try:
-                            WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.ID, x["Vote_Name"]))).click()
+                            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.ID, x["Vote_Name"]))).click()
                             print(x["deviceID"] + " " + x["profile"] + " " + "Vote Done")
+                            break
                         except:
                             pass
 
