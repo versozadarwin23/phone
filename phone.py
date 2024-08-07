@@ -273,7 +273,7 @@ def device_tasks(device):
                     pass
                 try:
                     driver.get('https://free.facebook.com/login.php')
-                    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.ID, 'checkpointSubmitButton')))
+                    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Continue"]')))
                     print(x["deviceID"] + " " + x["profile"] + " " + x["username"] + " " + "We'll send a confirmation code to your phone so that you can confirm your identity.")
                     continue
                 except:
