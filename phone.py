@@ -289,8 +289,10 @@ def device_tasks(device):
                 pass
 
             try:
-                get_url = driver.current_url
-                print(x["deviceID"] + " " + x["profile"] + " " + x["username"] + " " + str(get_url))
+                driver.get('https://free.facebook.com/profile.php')
+                WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Edit profile')))
+                url = driver.current_url
+                print(x["deviceID"] + " " + x["profile"] + " " + x["username"] + " " + url )
             except:
                 pass
 
