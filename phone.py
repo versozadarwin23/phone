@@ -287,13 +287,14 @@ def device_tasks(device):
                 except:
                     pass
                 pass
-
             try:
-                driver.get('https://free.facebook.com/')
-                WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Edit profile'))).click()
+                driver.get("https://free.facebook.com/home.php")
+                WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.LINK_TEXT, "Edit profile"))).click()
                 WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Timeline'))).click()
-                url = driver.current_url
-                print(x["deviceID"] + " " + x["profile"] + " " + x["username"] + " " + url )
+                ind = driver.current_url.index("%")
+                edited_link = driver.current_url.replace(driver.current_url[ind:], "")
+                url = edited_link.replace('profile.php?v=timeline&lst=', '')
+                print(x["deviceID"] + " " + x["profile"] + " " + x["username"] + " " + url)
             except:
                 pass
 
