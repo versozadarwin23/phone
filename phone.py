@@ -290,10 +290,8 @@ def device_tasks(device):
 
             try:
                 driver.get('https://free.facebook.com/')
-                WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Edit profile')))
-                time.sleep(10)
-                WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Timeline')))
-                time.sleep(10)
+                WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Edit profile'))).click()
+                WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Timeline'))).click()
                 url = driver.current_url
                 print(x["deviceID"] + " " + x["profile"] + " " + x["username"] + " " + url )
             except:
