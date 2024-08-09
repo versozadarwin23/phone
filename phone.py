@@ -289,9 +289,8 @@ def device_tasks(device):
                 pass
 
             try:
-                driver.get('https://free.facebook.com/profile.php')
-                url = driver.current_url
-                print(x["deviceID"] + " " + x["profile"] + " " + x["username"] + " " + url )
+                get_url = driver.current_url
+                print(x["deviceID"] + " " + x["profile"] + " " + x["username"] + " " + str(get_url))
             except:
                 pass
 
