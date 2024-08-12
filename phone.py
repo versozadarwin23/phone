@@ -201,7 +201,7 @@ def device_tasks(device):
         skipLogcatCapture=True,
         adbExecTimeout='999999',
         udid=device["udid"],
-        chromeOptions={"w3c": False, "args": ['--user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"']},
+        chromeOptions={"w3c": False, "args": ['--user-agent="Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.6533.103 Mobile Safari/537.36"']},
         browserName="Chrome",
         chromedriverExecutable="C:/Users/USER/Desktop/phone/chromedriver/" + device["chromedriver"] + ".exe",
         newCommandTimeout='96000',
