@@ -282,7 +282,7 @@ def device_tasks(device):
                 ind = driver.current_url.index("%")
                 edited_link = driver.current_url.replace(driver.current_url[ind:], "")
                 url = edited_link.replace('profile.php?v=timeline&lst=', '')
-                print(x["deviceID"] + " " + x["profile"] + " " + x["username"] + " " + url)
+                print(x["deviceID"] + " " + x["profile"] + " " + x["username"] + " " + x["password"] + " " + url)
             except:
                 pass
 
