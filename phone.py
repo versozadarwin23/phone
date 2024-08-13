@@ -222,7 +222,7 @@ def device_tasks(device):
                     pass
             while True:
                 try:
-                    driver.get("https://mbasic.facebook.com/")
+                    driver.get("https://free.facebook.com/")
                     WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.NAME, "email")))
                     break
                 except:
@@ -276,7 +276,7 @@ def device_tasks(device):
             except:
                 pass
             try:
-                driver.get("https://mbasic.facebook.com/home.php")
+                driver.get("https://free.facebook.com/home.php")
                 WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.LINK_TEXT, "Edit profile"))).click()
                 WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Timeline'))).click()
                 ind = driver.current_url.index("%")
@@ -288,7 +288,7 @@ def device_tasks(device):
 
             # check if block or wrong password
             try:
-                driver.get('https://mbasic.facebook.com/profile_picture?_rdc=1&_rdr')
+                driver.get('https://free.facebook.com/profile_picture?_rdc=1&_rdr')
                 WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, 'pic')))
             except:
                 try:
@@ -510,7 +510,7 @@ def device_tasks(device):
 
             if x["post photo"] == "yes":
                 try:
-                    driver.get('https://mbasic.facebook.com/')
+                    driver.get('https://free.facebook.com/')
                 except:
                     pass
 
@@ -645,7 +645,7 @@ def device_tasks(device):
                 post_timeline = timeline_post(category=x["category"])
                 for g in post_timeline:
                     try:
-                        driver.get("https://mbasic.facebook.com/home.php")
+                        driver.get("https://free.facebook.com/home.php")
                     except:
                         pass
                     try:
@@ -695,7 +695,7 @@ def device_tasks(device):
             if x["friends confirm"] == "yes":
                 for y in range(1000):
                     try:
-                        driver.get("https://mbasic.facebook.com/friends/center/requests/")
+                        driver.get("https://free.facebook.com/friends/center/requests/")
                         WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.LINK_TEXT, 'Back to home')))
                         break
                     except:
@@ -703,7 +703,7 @@ def device_tasks(device):
                     try:
                         WebDriverWait(driver, 10).until(
                             EC.presence_of_element_located((By.LINK_TEXT, "Confirm"))).click()
-                        driver.get("https://mbasic.facebook.com/friends/center/requests/")
+                        driver.get("https://free.facebook.com/friends/center/requests/")
                     except:
                         try:
                             driver.refresh()
