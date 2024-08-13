@@ -206,7 +206,14 @@ def device_tasks(device):
         chromedriverExecutable="C:/Users/USER/Desktop/phone/chromedriver/" + device["chromedriver"] + ".exe",
         newCommandTimeout='96000',
     )
-    driver = webdriver.Remote("http://localhost:4723/wd/hub", fb_apps)
+    while True:
+        try:
+            time.sleep(5)
+            driver = webdriver.Remote("http://localhost:4723/wd/hub", fb_apps)
+            time.sleep(10)
+            break
+        except:
+            pass
     apps = fetch_appName_by_deviceID(deviceID=device["deviceID"])
     try:
         subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global stay_on_while_plugged_in 3", shell=True)
