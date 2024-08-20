@@ -266,6 +266,18 @@ def device_tasks(device):
             WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, "Not now"))).click()
         except:
             pass
+        # check if block or wrong password
+        try:
+            driver.get('https://free.facebook.com/profile_picture?_rdc=1&_rdr')
+            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, 'pic')))
+        except:
+            try:
+                WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '#login_error')))
+                print(x["deviceID"] + " " + x["profile"] + " " + x["username"] + " " + x[
+                    "password"] + " " + "Login Error wrong passw")
+                driver.delete_all_cookies()
+            except:
+                pass
         # try:
         #     WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[action="/zero/optin/write/?action=confirm&page=dialtone_optin_page"]'))).click()
         # except:
@@ -302,18 +314,6 @@ def device_tasks(device):
             print(x["deviceID"] + " " + x["profile"] + " " + x["username"] + " " + x["password"] + " " + url)
         except:
             pass
-
-        # check if block or wrong password
-        try:
-            driver.get('https://free.facebook.com/profile_picture?_rdc=1&_rdr')
-            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, 'pic')))
-        except:
-            try:
-                WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '#login_error')))
-                print(x["deviceID"] + " " + x["profile"] + " " + x["username"] + " " + x["password"] + " " + "Login Error wrong passw")
-                driver.delete_all_cookies()
-            except:
-                pass
 
         if x["report"] == "yes":
             for report_group in x["report_link"].split(" "):
