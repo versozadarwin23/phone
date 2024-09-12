@@ -2,7 +2,7 @@ try:
     from urllib.request import urlretrieve
 except ImportError:
     from urllib import urlretrieve
-
+from selenium.webdriver.common.keys import Keys
 import os
 import subprocess
 from selenium.webdriver.common.by import By
@@ -201,7 +201,7 @@ def device_tasks(device):
         skipLogcatCapture=True,
         adbExecTimeout='999999',
         udid=device["udid"],
-        chromeOptions={"w3c": False, "args": ['--user-agent="Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.114 Mobile Safari/537.36"']},
+        chromeOptions={"w3c": False},
         # chromeOptions={"w3c": False, "args": ['--user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"']},
         browserName="Chrome",
         chromedriverExecutable="C:/Users/USER/Desktop/phone/chromedriver/" + device["chromedriver"] + ".exe",
@@ -253,17 +253,13 @@ def device_tasks(device):
                 except:
                     pass
             try:
-                WebDriverWait(driver, 240).until(EC.visibility_of_element_located((By.NAME, "pass"))).send_keys(x["password"])
+                WebDriverWait(driver, 240).until(EC.visibility_of_element_located((By.NAME, "pass"))).send_keys(x["password"].keys.ENTER)
+                break
             except:
                 try:
                     device_tasks(device)
                 except:
                     pass
-            try:
-                WebDriverWait(driver, 240).until(EC.visibility_of_element_located((By.NAME, "login"))).click()
-                break
-            except:
-                pass
         try:
             WebDriverWait(driver, 120).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Save"]')))
             print(x["deviceID"] + " " + x["profile"] + " " + "Login Done")
@@ -684,7 +680,6 @@ def device_tasks(device):
                         driver.refresh()
                     except:
                         pass
-                    pass
                 try:
                     WebDriverWait(driver, 10).until(
                         EC.presence_of_element_located((By.LINK_TEXT, "See People You May Know")))
