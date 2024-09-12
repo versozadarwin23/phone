@@ -235,7 +235,7 @@ def device_tasks(device):
 
         while True:
             try:
-                driver.get("https://mbasic.facebook.com/")
+                driver.get("https://m.facebook.com/")
                 WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.NAME, "email")))
                 break
             except:
