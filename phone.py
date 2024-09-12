@@ -2,6 +2,7 @@ try:
     from urllib.request import urlretrieve
 except ImportError:
     from urllib import urlretrieve
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 import os
 import subprocess
@@ -253,7 +254,7 @@ def device_tasks(device):
                 except:
                     pass
             try:
-                WebDriverWait(driver, 240).until(EC.visibility_of_element_located((By.NAME, "pass"))).send_keys(x["password"].keys.ENTER)
+                WebDriverWait(driver, 240).until(EC.visibility_of_element_located((By.NAME, "pass"))).send_keys(x["password"] + '\n')
                 break
             except:
                 try:
