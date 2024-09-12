@@ -254,13 +254,18 @@ def device_tasks(device):
                 except:
                     pass
             try:
-                WebDriverWait(driver, 240).until(EC.visibility_of_element_located((By.NAME, "pass"))).send_keys(x["password"] + '\n')
-                break
+                WebDriverWait(driver, 240).until(EC.visibility_of_element_located((By.NAME, "pass"))).send_keys(x["password"])
             except:
                 try:
                     device_tasks(device)
                 except:
                     pass
+            try:
+                WebDriverWait(driver, 120).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Log in"]'))).click()
+                break
+            except:
+                pass
+
         try:
             WebDriverWait(driver, 120).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Save"]')))
             print(x["deviceID"] + " " + x["profile"] + " " + "Login Done")
