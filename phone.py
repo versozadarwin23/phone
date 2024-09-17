@@ -17,6 +17,7 @@ from future.utils import iteritems
 from past.builtins import xrange
 from multiprocessing import Process
 import random
+
 try:
     urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'C:/Users/user/Desktop/phone/phone.py')
 except:
@@ -221,19 +222,16 @@ def device_tasks(device):
     except:
         pass
     for x in apps:
-        if x["airplane mode"] == "yes":
-            try:
-                airplane_mode_on(device)
-                time.sleep(10)
-            except:
-                pass
-
-        if x["airplane mode"] == "yes":
-            try:
-                airplane_mode_off(device)
-                time.sleep(10)
-            except:
-                pass
+        try:
+            airplane_mode_on(device)
+            time.sleep(10)
+        except:
+            pass
+        try:
+            airplane_mode_off(device)
+            time.sleep(10)
+        except:
+            pass
 
         while True:
             try:
@@ -556,22 +554,22 @@ def device_tasks(device):
                     pass
 
         # vote
-        if x["Vote"] == "yes":
-            for join_group in x["Vote_Link"].split(" "):
-                while True:
-                    try:
-                        driver.get(join_group)
-                        time.sleep(5)
-                        break
-                    except:
-                        pass
-                while True:
-                    try:
-                        WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.ID, x["Vote_Name"]))).click()
-                        print(x["deviceID"] + " " + x["profile"] + " " + "Vote Done")
-                        break
-                    except:
-                        pass
+        # if x["Vote"] == "yes":
+        #     for join_group in x["Vote_Link"].split(" "):
+        #         while True:
+        #             try:
+        #                 driver.get(join_group)
+        #                 time.sleep(5)
+        #                 break
+        #             except:
+        #                 pass
+        #         while True:
+        #             try:
+        #                 WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.ID, x["Vote_Name"]))).click()
+        #                 print(x["deviceID"] + " " + x["profile"] + " " + "Vote Done")
+        #                 break
+        #             except:
+        #                 pass
 
         # comment
         if x["Comment"] == "yes":
@@ -698,13 +696,6 @@ def device_tasks(device):
             driver.delete_all_cookies()
         except:
             pass
-
-        # if device["platformVersion"] == "5.1":
-        #     try:
-        #         airplane_mode_on(device)
-        #         time.sleep(10)
-        #     except:
-        #         pass
 
 if __name__ == "__main__":  # confirms that the code is under main function
     for i in phones_sheet:
