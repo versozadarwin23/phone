@@ -223,11 +223,6 @@ def device_tasks(device):
         pass
     for x in apps:
         try:
-            airplane_mode_on(device)
-            time.sleep(10)
-        except:
-            pass
-        try:
             airplane_mode_off(device)
             time.sleep(10)
         except:
@@ -266,7 +261,7 @@ def device_tasks(device):
                 pass
 
         try:
-            WebDriverWait(driver, 120).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Save"]')))
+            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Save"]')))
             print(x["deviceID"] + " " + x["profile"] + " " + "Login Done")
         except:
             print(x["deviceID"] + " " + x["profile"] + " " + "Login Error")
@@ -694,6 +689,11 @@ def device_tasks(device):
 
         try:
             driver.delete_all_cookies()
+        except:
+            pass
+        try:
+            airplane_mode_on(device)
+            time.sleep(10)
         except:
             pass
 
