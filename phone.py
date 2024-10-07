@@ -255,7 +255,7 @@ def device_tasks(device):
                 except:
                     pass
             try:
-                WebDriverWait(driver, 120).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Log in"]'))).click()
+                WebDriverWait(driver, 120).until(EC.visibility_of_element_located((By.CLASS_NAME, 'login'))).click()
                 break
             except:
                 pass
