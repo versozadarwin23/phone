@@ -255,11 +255,11 @@ def device_tasks(device):
                 except:
                     pass
             try:
-                WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.ID, 'login'))).click()
+                WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.NAME, 'login'))).click()
                 break
             except:
                 try:
-                    WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Log in"]')))
+                    WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'button[value="Log in"]')))
                     break
                 except:
                     pass
