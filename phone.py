@@ -271,8 +271,9 @@ def device_tasks(device):
 
         try:
             WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.NAME, 'xc_message')))
+            print(x["deviceID"] + " " + x["profile"] + " " + "Login Done")
         except:
-            pass
+            continue
 
         if x["Check Accounts"] == "yes":
             while True:
