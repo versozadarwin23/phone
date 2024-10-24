@@ -274,6 +274,7 @@ def device_tasks(device):
 
         if x["Check Accounts"] == "yes":
             while True:
+                time.sleep(10)
                 try:
                     driver.get("https://mbasic.facebook.com/")
                     break
@@ -281,13 +282,18 @@ def device_tasks(device):
                     pass
             while True:
                 try:
-                    WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Profile'))).click()
-                    print(x["deviceID"] + " " + x["profile"] + " " + x["username"]) + " " + x["password"] + " " + driver.title
+                    WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Edit profile'))).click()
+                except:
+                    pass
+                try:
+                    time.sleep(10)
+                    WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Edit profile'))).click()
+                    print(x["deviceID"] + " " + x["profile"] + " " + x["username"] + " " + x["password"] + " " + driver.current_url)
                     break
                 except:
                     try:
-                        WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Edit Profile'))).click()
-                        print(x["deviceID"] + " " + x["profile"] + " " + "Login Error")
+                        WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Profile'))).click()
+                        print(x["deviceID"] + " " + x["profile"] + " " + x["username"] + " " + x["password"] + " " + driver.current_url)
                         break
                     except:
                         pass
