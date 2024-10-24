@@ -205,7 +205,7 @@ def device_tasks(device):
         adbExecTimeout='999999',
         udid=device["udid"],
         # chromeOptions={"w3c": False},
-        chromeOptions={"w3c": False, "args": ['--user-agent="Mozilla/5.0 (Linux; Android 13; V2053) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Mobile Safari/537.36"']},
+        chromeOptions={"w3c": False, "args": ['--user-agent="Mozilla/5.0 (Linux; Android 13; V2053) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Mobile Safari/537.36"' '--disable-popup-blocking']},
         browserName="Chrome",
         chromedriverExecutable="C:/Users/USER/Desktop/phone/chromedriver/" + device["chromedriver"] + ".exe",
         newCommandTimeout='96000',
@@ -270,7 +270,7 @@ def device_tasks(device):
             print(x["deviceID"] + " " + x["profile"] + " " + "Login Error Need Code")
 
         try:
-            WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.NAME, 'xc_message')))
+            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, '[aria-label="Make a Post on Facebook"]')))
             print(x["deviceID"] + " " + x["profile"] + " " + "Login Done")
         except:
             continue
