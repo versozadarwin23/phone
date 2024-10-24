@@ -268,9 +268,12 @@ def device_tasks(device):
             WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Get started')))
         except:
             print(x["deviceID"] + " " + x["profile"] + " " + "Login Error Need Code")
+            continue
 
+        time.sleep(10)
+        driver.get("https://mbasic.facebook.com/")
         try:
-            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, '[aria-label="Make a Post on Facebook"]')))
+            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, 'xc_message')))
             print(x["deviceID"] + " " + x["profile"] + " " + "Login Done")
         except:
             continue
