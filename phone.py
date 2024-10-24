@@ -210,12 +210,7 @@ def device_tasks(device):
         chromedriverExecutable="C:/Users/USER/Desktop/phone/chromedriver/" + device["chromedriver"] + ".exe",
         newCommandTimeout='96000',
     )
-    while True:
-        try:
-            driver = webdriver.Remote("http://localhost:4723/wd/hub", fb_apps)
-            break
-        except:
-            pass
+    driver = webdriver.Remote("http://localhost:4723/wd/hub", fb_apps)
     apps = fetch_appName_by_deviceID(deviceID=device["deviceID"])
     try:
         subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global stay_on_while_plugged_in 3", shell=True)
@@ -255,22 +250,29 @@ def device_tasks(device):
                 except:
                     pass
             try:
-                WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.NAME, 'login'))).click()
+                WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, 'login'))).click()
                 break
             except:
                 try:
-                    WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Log in"]'))).click()
+                    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Log in"]'))).click()
                     break
                 except:
                     pass
 
         try:
-            WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Save"]'))).click()
-            print(x["deviceID"] + " " + x["profile"] + " " + "Login Done")
+            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, '[aria-label="Save"]'))).click()
         except:
-            print(x["deviceID"] + " " + x["profile"] + " " + "Login Error")
-            continue
+            pass
 
+        try:
+            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Get started')))
+        except:
+            print(x["deviceID"] + " " + x["profile"] + " " + "Login Error Need Code")
+
+        try:
+            WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.NAME, 'xc_message')))
+        except:
+            pass
 
         if x["Check Accounts"] == "yes":
             while True:
