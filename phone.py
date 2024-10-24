@@ -204,8 +204,8 @@ def device_tasks(device):
         skipLogcatCapture=True,
         adbExecTimeout='999999',
         udid=device["udid"],
-        chromeOptions={"w3c": False},
-        # chromeOptions={"w3c": False, "args": ['--user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"']},
+        # chromeOptions={"w3c": False},
+        chromeOptions={"w3c": False, "args": ['--user-agent="Mozilla/5.0 (Linux; Android 13; V2053) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Mobile Safari/537.36"']},
         browserName="Chrome",
         chromedriverExecutable="C:/Users/USER/Desktop/phone/chromedriver/" + device["chromedriver"] + ".exe",
         newCommandTimeout='96000',
@@ -241,40 +241,57 @@ def device_tasks(device):
 
         while True:
             try:
-                WebDriverWait(driver, 240).until(EC.visibility_of_element_located((By.NAME, "email"))).send_keys(x["username"])
+                WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.NAME, "email"))).send_keys(x["username"])
             except:
                 try:
                     device_tasks(device)
                 except:
                     pass
             try:
-                WebDriverWait(driver, 240).until(EC.visibility_of_element_located((By.NAME, "pass"))).send_keys(x["password"])
+                WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.NAME, "pass"))).send_keys(x["password"])
             except:
                 try:
                     device_tasks(device)
                 except:
                     pass
             try:
-                WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.NAME, 'login'))).click()
+                WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.NAME, 'login'))).click()
                 break
             except:
                 try:
-                    WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'button[value="Log in"]')))
+                    WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Log in"]'))).click()
                     break
                 except:
                     pass
-            # try:
-            #     WebDriverWait(driver, 120).until(EC.visibility_of_element_located((By.CLASS_NAME, 'login'))).click()
-            #     break
-            # except:
-            #     pass
 
         try:
-            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Save"]')))
+            WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Save"]'))).click()
             print(x["deviceID"] + " " + x["profile"] + " " + "Login Done")
         except:
             print(x["deviceID"] + " " + x["profile"] + " " + "Login Error")
             continue
+
+
+        if x["Check Accounts"] == "yes":
+            while True:
+                try:
+                    driver.get("https://mbasic.facebook.com/")
+                    break
+                except:
+                    pass
+            while True:
+                try:
+                    WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Profile'))).click()
+                    print(x["deviceID"] + " " + x["profile"] + " " + x["username"]) + " " + x["password"] + " " + driver.title
+                    break
+                except:
+                    try:
+                        WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Edit Profile'))).click()
+                        print(x["deviceID"] + " " + x["profile"] + " " + "Login Error")
+                        break
+                    except:
+                        pass
+
 
         if x["report"] == "yes":
             for report_group in x["report_link"].split(" "):
