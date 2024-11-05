@@ -18,10 +18,10 @@ from past.builtins import xrange
 from multiprocessing import Process
 import random
 
-try:
-    urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'C:/Users/user/Desktop/phone/phone.py')
-except:
-    pass
+# try:
+#     urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'C:/Users/user/Desktop/phone/phone.py')
+# except:
+#     pass
 input_file = "phone.xlsx"
 sheet_names = ["Phones", "Apps", "Comments", "Timeline", "Friends", "Reactions"]
 sheet = ""
@@ -205,7 +205,7 @@ def device_tasks(device):
         adbExecTimeout='999999',
         udid=device["udid"],
         # chromeOptions={"w3c": False},
-        chromeOptions={"w3c": False, "args": ['--user-agent="Mozilla/5.0 (Linux; Android 13; V2053) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Mobile Safari/537.36"' '--disable-popup-blocking']},
+        chromeOptions={"w3c": False, "args": ['--user-agent="Mozilla/5.0 (Linux; Android 13; V2053) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Mobile Safari/537.36"' '--disable-notifications']},
         browserName="Chrome",
         chromedriverExecutable="C:/Users/USER/Desktop/phone/chromedriver/" + device["chromedriver"] + ".exe",
         newCommandTimeout='96000',
@@ -260,50 +260,17 @@ def device_tasks(device):
                     pass
 
         try:
-            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, '[aria-label="Save"]'))).click()
+            WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Save"]'))).click()
+            time.sleep(15)
         except:
             pass
 
         try:
-            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Get started')))
-        except:
-            print(x["deviceID"] + " " + x["profile"] + " " + "Login Error Need Code")
-            continue
-
-        time.sleep(10)
-        driver.get("https://mbasic.facebook.com/")
-        try:
-            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, 'xc_message')))
+            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Make a Post on Facebook"]')))
             print(x["deviceID"] + " " + x["profile"] + " " + "Login Done")
         except:
+            print(x["deviceID"] + " " + x["profile"] + " " + "Login Error")
             continue
-
-        if x["Check Accounts"] == "yes":
-            while True:
-                time.sleep(10)
-                try:
-                    driver.get("https://mbasic.facebook.com/")
-                    break
-                except:
-                    pass
-            while True:
-                try:
-                    WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Edit profile'))).click()
-                except:
-                    pass
-                try:
-                    time.sleep(10)
-                    WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Edit profile'))).click()
-                    print(x["deviceID"] + " " + x["profile"] + " " + x["username"] + " " + x["password"] + " " + driver.current_url)
-                    break
-                except:
-                    try:
-                        WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Profile'))).click()
-                        print(x["deviceID"] + " " + x["profile"] + " " + x["username"] + " " + x["password"] + " " + driver.current_url)
-                        break
-                    except:
-                        pass
-
 
         if x["report"] == "yes":
             for report_group in x["report_link"].split(" "):
