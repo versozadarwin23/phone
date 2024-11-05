@@ -269,7 +269,7 @@ def device_tasks(device):
             WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Make a Post on Facebook"]')))
             print(x["deviceID"] + " " + x["profile"] + " " + "Login Done")
         except:
-            print(x["deviceID"] + " " + x["profile"] + " " + "Login Error")
+            print(x["deviceID"] + " " + x["username"] + " " + "Login Error")
             continue
 
         if x["report"] == "yes":
