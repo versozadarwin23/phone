@@ -18,10 +18,10 @@ from past.builtins import xrange
 from multiprocessing import Process
 import random
 
-# try:
-#     urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'C:/Users/user/Desktop/phone/phone.py')
-# except:
-#     pass
+try:
+    urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'C:/Users/user/Desktop/phone/phone.py')
+except:
+    pass
 input_file = "phone.xlsx"
 sheet_names = ["Phones", "Apps", "Comments", "Timeline", "Friends", "Reactions"]
 sheet = ""
@@ -578,14 +578,21 @@ def device_tasks(device):
             for comments in x["comment link"].split(" "):
                 driver.get(comments)
                 try:
-                    WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.ID, 'composerInput'))).send_keys(comment)
+                    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.ID, 'composerInput'))).send_keys(comment)
                 except:
-                    pass
+                    try:
+                        WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CLASS_NAME, 'm mentions-text'))).send_keys(comment)
+                    except:
+                        pass
                 try:
                     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[value="Comment"]'))).click()
                     print(x["deviceID"] + " " + x["profile"] + " " + comments + " " + "Comment done")
                 except:
-                    pass
+                    try:
+                        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[aria-label="Post a comment"]'))).click()
+                        print(x["deviceID"] + " " + x["profile"] + " " + comments + " " + "Comment done")
+                    except:
+                        pass
                 try:
                     WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.LINK_TEXT, 'Back to home')))
                     print(x["deviceID"] + " " + x["profile"] + " " + "Your account is restricted right now")
