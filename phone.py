@@ -250,11 +250,11 @@ def device_tasks(device):
                 except:
                     pass
             try:
-                WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, 'login'))).click()
+                WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Log in"]'))).click()
                 break
             except:
                 try:
-                    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Log in"]'))).click()
+                    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, 'login'))).click()
                     break
                 except:
                     pass
@@ -602,12 +602,12 @@ def device_tasks(device):
 
         # share Post
         if x["share"] == "yes":
+            try:
+                driver.get('https://m.facebook.com/composer/')
+            except:
+                pass
             post_list = x["links_to_share"].split(' ')
             for g in post_list:
-                try:
-                    driver.get('https://m.facebook.com/composer/')
-                except:
-                    pass
                 try:
                     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, "[aria-label='What's on your mind?']"))).send_keys(g + '\n')
                 except:
