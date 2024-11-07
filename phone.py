@@ -605,15 +605,15 @@ def device_tasks(device):
             post_list = x["links_to_share"].split(' ')
             for g in post_list:
                 try:
-                    driver.get(g)
+                    driver.get('https://m.facebook.com/composer/')
                 except:
                     pass
                 try:
-                    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.LINK_TEXT, "Share"))).click()
+                    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, "[aria-label='What's on your mind?']"))).send_keys(g + '\n')
                 except:
                     pass
                 try:
-                    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "view_post"))).click()
+                    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, "[aria-label='POST']"))).click()
                 except:
                     pass
                 try:
