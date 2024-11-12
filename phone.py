@@ -649,12 +649,7 @@ def device_tasks(device):
                     driver.get(o)
                 except:
                     pass
-                try:
-                    WebDriverWait(driver, 10).until(
-                        EC.presence_of_element_located((By.LINK_TEXT, reaction))).click()
-                    print(x["deviceID"] + " " + x["profile"] + " " + o + " " + reaction + " " + "React Done")
-                except:
-                    pass
+                time.sleep(180)
                 try:
                     WebDriverWait(driver, 3).until(EC.presence_of_element_located(
                         (By.CSS_SELECTOR, '[title="Your account is restricted right now"]')))
