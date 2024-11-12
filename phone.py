@@ -645,7 +645,7 @@ def device_tasks(device):
                     driver.get(o)
                 except:
                     pass
-                time.sleep(20 )
+                time.sleep(5)
                 try:
                     WebDriverWait(driver, 3).until(EC.presence_of_element_located(
                         (By.CSS_SELECTOR, '[title="Your account is restricted right now"]')))
