@@ -578,15 +578,11 @@ def device_tasks(device):
             for comments in x["comment link"].split(" "):
                 driver.get(comments)
                 try:
-                    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.ID, 'composerInput'))).send_keys(comment)
+                    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CLASS_NAME, 'm mentions-text'))).send_keys(comment)
                 except:
-                    try:
-                        WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CLASS_NAME, 'm mentions-text'))).send_keys(comment)
-                    except:
-                        pass
+                    pass
                 try:
                     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[value="Comment"]'))).click()
-                    print(x["deviceID"] + " " + x["profile"] + " " + comments + " " + "Comment done")
                 except:
                     try:
                         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[aria-label="Post a comment"]'))).click()
