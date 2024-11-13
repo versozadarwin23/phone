@@ -577,10 +577,16 @@ def device_tasks(device):
             comment = fetch_random_comment_by_category(category=x["category"], number=options)
             for comments in x["comment link"].split(" "):
                 driver.get(comments)
-                try:
-                    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CLASS_NAME, 'm mentions-text'))).send_keys(comment)
-                except:
-                    pass
+                time.sleep(10)
+                WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div[data-mcomponent="MInputBox"]'))).click()
+                time.sleep(10)
+                while True:
+                    try:
+                        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell " + " " + comment)
+                        break
+                    except:
+                        pass
+                time.sleep(10)
                 try:
                     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[value="Comment"]'))).click()
                 except:
