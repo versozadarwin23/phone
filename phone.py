@@ -22,6 +22,7 @@ try:
     urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'C:/Users/user/Desktop/phone/phone.py')
 except:
     pass
+
 input_file = "phone.xlsx"
 sheet_names = ["Phones", "Apps", "Comments", "Timeline", "Friends", "Reactions"]
 sheet = ""
@@ -581,7 +582,7 @@ def device_tasks(device):
                 time.sleep(10)
                 WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div[data-mcomponent="MInputBox"]'))).click()
                 time.sleep(10)
-                subprocess.check_output("adb -s " + " " + device["udid"] + " " + "input text " + " " + comment)
+                subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell input text" + " " + comment)
                 time.sleep(10)
                 try:
                     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[value="Comment"]'))).click()
