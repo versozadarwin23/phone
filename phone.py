@@ -575,8 +575,8 @@ def device_tasks(device):
 
         # comment
         if x["Comment"] == "yes":
-            options = random.choice([1, 1, 2, 2, 3, 3])
-            comment = fetch_random_comment_by_category(category=x["category"], number=options)
+            # options = random.choice([1, 1, 2, 2, 3, 3])
+            comment = fetch_random_comment_by_category(category=x["category"])
             for comments in x["comment link"].split(" "):
                 driver.get(comments)
                 time.sleep(10)
