@@ -585,10 +585,11 @@ def device_tasks(device):
                 subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell input text" + " " + comment)
                 time.sleep(10)
                 try:
-                    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[value="Comment"]'))).click()
+                    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[aria-label="Post a comment"]'))).click()
+                    print(x["deviceID"] + " " + x["profile"] + " " + comments + " " + "Comment done")
                 except:
                     try:
-                        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[aria-label="Post a comment"]'))).click()
+                        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[value="Comment"]'))).click()
                         print(x["deviceID"] + " " + x["profile"] + " " + comments + " " + "Comment done")
                     except:
                         pass
