@@ -579,21 +579,39 @@ def device_tasks(device):
             s = comment = fetch_random_comment_by_category(category=x["category"])
             daw = s.replace(' ', '%s')
             for comments in x["comment link"].split(" "):
-                driver.get(comments)
-                time.sleep(5)
-                WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div[data-mcomponent="MInputBox"]'))).click()
-                time.sleep(5)
-                subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell input text" + " " + daw)
-                time.sleep(5)
-                try:
-                    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[aria-label="Post a comment"]'))).click()
-                    print(x["deviceID"] + " " + x["profile"] + " " + comments + " " + "Comment done")
-                except:
+                while True:
                     try:
-                        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[value="Comment"]'))).click()
-                        print(x["deviceID"] + " " + x["profile"] + " " + comments + " " + "Comment done")
+                        driver.get(comments)
+                        break
                     except:
                         pass
+                while True:
+                    try:
+                        time.sleep(5)
+                        WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div[data-mcomponent="MInputBox"]'))).click()
+                        break
+                    except:
+                        pass
+                while True:
+                    try:
+                        time.sleep(5)
+                        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell input text" + " " + daw)
+                        time.sleep(5)
+                        break
+                    except:
+                        pass
+                while True:
+                    try:
+                        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[aria-label="Post a comment"]'))).click()
+                        print(x["deviceID"] + " " + x["profile"] + " " + comments + " " + "Comment done")
+                        break
+                    except:
+                        try:
+                            WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[value="Comment"]'))).click()
+                            print(x["deviceID"] + " " + x["profile"] + " " + comments + " " + "Comment done")
+                            break
+                        except:
+                            pass
                 try:
                     WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.LINK_TEXT, 'Back to home')))
                     print(x["deviceID"] + " " + x["profile"] + " " + "Your account is restricted right now")
