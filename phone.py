@@ -191,6 +191,7 @@ def airplane_mode_on(device):
         pass
 
 def device_tasks(device):
+    global apps
     fb_apps = dict(
         platformName=device["platformName"],
         automationName=device["automationName"],
@@ -212,8 +213,16 @@ def device_tasks(device):
         chromedriverExecutable="C:/Users/USER/Desktop/phone/chromedriver/" + device["chromedriver"] + ".exe",
         newCommandTimeout='96000',
     )
-    driver = webdriver.Remote("http://localhost:4723/wd/hub", fb_apps)
-    apps = fetch_appName_by_deviceID(deviceID=device["deviceID"])
+    while True:
+        try:
+            driver = webdriver.Remote("http://localhost:4723/wd/hub", fb_apps)
+            break
+        except:
+            pass
+    try:
+        apps = fetch_appName_by_deviceID(deviceID=device["deviceID"])
+    except:
+        pass
     try:
         subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global stay_on_while_plugged_in 3", shell=True)
     except:
