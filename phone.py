@@ -250,12 +250,20 @@ def device_tasks(device):
                 WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.NAME, "email"))).send_keys(x["username"])
             except:
                 try:
+                    driver.delete_all_cookies()
+                except:
+                    pass
+                try:
                     device_tasks(device)
                 except:
                     pass
             try:
                 WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.NAME, "pass"))).send_keys(x["password"])
             except:
+                try:
+                    driver.delete_all_cookies()
+                except:
+                    pass
                 try:
                     device_tasks(device)
                 except:
@@ -280,6 +288,10 @@ def device_tasks(device):
             WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Make a Post on Facebook"]')))
             print(x["deviceID"] + " " + x["profile"] + " " + "Login Done")
         except:
+            try:
+                driver.delete_all_cookies()
+            except:
+                pass
             print(x["deviceID"] + " " + x["username"] + " " + "Login Error")
             continue
 
