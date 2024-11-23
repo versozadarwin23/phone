@@ -547,15 +547,10 @@ def device_tasks(device):
                         break
                     except:
                         pass
-                try:
-                    WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Like'))).click()
-                    print(x["deviceID"] + " " + x["profile"] + " " + like_page + " " + "Like Page Done")
-                except:
-                    pass
 
                 try:
                     WebDriverWait(driver, 3).until(
-                        EC.visibility_of_element_located((By.LINK_TEXT, 'Follow'))).click()
+                        EC.visibility_of_element_located((By.CLASS_NAME, 'm bg-s31'))).click()
                     print(x["deviceID"] + " " + x["profile"] + " " + like_page + " " + "Follow Page Done")
                 except:
                     pass
