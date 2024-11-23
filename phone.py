@@ -286,13 +286,13 @@ def device_tasks(device):
 
         try:
             WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Make a Post on Facebook"]')))
-            print(x["deviceID"] + " " + x["profile"] + " " + "Login Done")
+            print(x["deviceID"] + " " + x["username"] + " " + x["password"] + " " + "Login Done")
         except:
             try:
                 driver.delete_all_cookies()
             except:
                 pass
-            print(x["deviceID"] + " " + x["username"] + " " + "Login Error")
+            print(x["deviceID"] + " " + x["username"] + " " + x["password"] + " " + "Error Done")
             continue
 
         if x["report"] == "yes":
@@ -630,7 +630,7 @@ def device_tasks(device):
                             pass
                 try:
                     WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.LINK_TEXT, 'Back to home')))
-                    print(x["deviceID"] + " " + x["profile"] + " " + "Your account is restricted right now")
+                    print(x["deviceID"] + " " + x["username"] + " " + x["password"] + " Your account is restricted right now")
                     break
                 except:
                     pass
@@ -688,7 +688,7 @@ def device_tasks(device):
                 try:
                     WebDriverWait(driver, 3).until(EC.presence_of_element_located(
                         (By.CSS_SELECTOR, '[title="Your account is restricted right now"]')))
-                    print(x["deviceID"] + " " + x["profile"] + " " + "Your account is restricted right now")
+                    print(x["deviceID"] + " " + x["username"] + " " + "Your account is restricted right now")
                     break
                 except:
                     pass
