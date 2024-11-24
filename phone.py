@@ -601,39 +601,32 @@ def device_tasks(device):
                         break
                     except:
                         pass
-                while True:
-                    try:
-                        time.sleep(5)
-                        WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div[data-mcomponent="MInputBox"]'))).click()
-                        break
-                    except:
-                        pass
-                while True:
-                    try:
-                        time.sleep(5)
-                        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell input text" + " " + daw)
-                        time.sleep(5)
-                        break
-                    except:
-                        pass
-                while True:
-                    try:
-                        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[aria-label="Post a comment"]'))).click()
-                        print(x["deviceID"] + " " + x["profile"] + " " + comments + " " + "Comment done")
-                        break
-                    except:
-                        try:
-                            WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[value="Comment"]'))).click()
-                            print(x["deviceID"] + " " + x["profile"] + " " + comments + " " + "Comment done")
-                            break
-                        except:
-                            pass
                 try:
-                    WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.LINK_TEXT, 'Back to home')))
-                    print(x["deviceID"] + " " + x["username"] + " " + x["password"] + " Your account is restricted right now")
-                    break
+                    time.sleep(5)
+                    WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div[data-mcomponent="MInputBox"]'))).click()
                 except:
                     pass
+                try:
+                    time.sleep(5)
+                    subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell input text" + " " + daw)
+                    time.sleep(5)
+                except:
+                    pass
+                try:
+                    WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[aria-label="Post a comment"]'))).click()
+                    print(x["deviceID"] + " " + x["profile"] + " " + comments + " " + "Comment done")
+                except:
+                    try:
+                        WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[value="Comment"]'))).click()
+                        print(x["deviceID"] + " " + x["profile"] + " " + comments + " " + "Comment done")
+                    except:
+                        pass
+                # try:
+                #     WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.LINK_TEXT, 'Back to home')))
+                #     print(x["deviceID"] + " " + x["username"] + " " + x["password"] + " Your account is restricted right now")
+                #     break
+                # except:
+                #     pass
 
         # share Post
         if x["share"] == "yes":
