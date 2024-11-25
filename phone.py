@@ -606,12 +606,14 @@ def device_tasks(device):
                     WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div[data-mcomponent="MInputBox"]'))).click()
                 except:
                     pass
-                try:
-                    time.sleep(5)
-                    subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell input text" + " " + daw)
-                    time.sleep(5)
-                except:
-                    pass
+                while True:
+                    try:
+                        time.sleep(5)
+                        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell input text" + " " + daw)
+                        time.sleep(5)
+                        break
+                    except:
+                        pass
                 try:
                     WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[aria-label="Post a comment"]'))).click()
                     print(x["deviceID"] + " " + x["profile"] + " " + comments + " " + "Comment done")
