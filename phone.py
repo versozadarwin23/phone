@@ -611,15 +611,21 @@ def device_tasks(device):
                 while True:
                     try:
                         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[aria-label="Post a comment"]'))).click()
-                        print(x["deviceID"] + " " + x["profile"] + " " + comments + " " + "Comment done")
                         break
                     except:
                         try:
                             WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[value="Comment"]'))).click()
-                            print(x["deviceID"] + " " + x["profile"] + " " + comments + " " + "Comment done")
                             break
                         except:
                             pass
+                while True:
+                    try:
+                        element = WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[style="color:#65676b;"]')))
+                        print(x["deviceID"] + " " + x["profile"] + " " + comments + " " + "Comment done")
+                        break
+                    except:
+                        pass
+
         # reaction
         if x["reaction"] == "yes":
             for o in x["links_to_react"].split(" "):
