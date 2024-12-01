@@ -1,10 +1,11 @@
+from selenium.webdriver.common.actions.action_builder import ActionBuilder
+from selenium.webdriver.common.actions.pointer_input import PointerInput
+from selenium.webdriver.common.actions import interaction
 try:
     from urllib.request import urlretrieve
 except ImportError:
     from urllib import urlretrieve
 from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.keys import Keys
-import os
 import subprocess
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -191,7 +192,7 @@ def airplane_mode_on(device):
         pass
 
 def device_tasks(device):
-    global apps
+    global apps, element
     fb_apps = dict(
         platformName=device["platformName"],
         automationName=device["automationName"],
@@ -206,6 +207,7 @@ def device_tasks(device):
         deviceReadyTimeout='999999',
         skipLogcatCapture=True,
         adbExecTimeout='999999',
+        autoWebview=False,
         udid=device["udid"],
         # chromeOptions={"w3c": False},
         chromeOptions={"w3c": False, "args": ['--user-agent="Mozilla/5.0 (Linux; Android 13; V2053) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Mobile Safari/537.36"' '--disable-notifications']},
@@ -250,20 +252,12 @@ def device_tasks(device):
                 WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.NAME, "email"))).send_keys(x["username"])
             except:
                 try:
-                    driver.delete_all_cookies()
-                except:
-                    pass
-                try:
                     device_tasks(device)
                 except:
                     pass
             try:
                 WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.NAME, "pass"))).send_keys(x["password"])
             except:
-                try:
-                    driver.delete_all_cookies()
-                except:
-                    pass
                 try:
                     device_tasks(device)
                 except:
@@ -286,13 +280,9 @@ def device_tasks(device):
 
         try:
             WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Make a Post on Facebook"]')))
-            print(x["deviceID"] + " " + x["username"] + " " + x["password"] + " " + "Login Done")
+            print(x["deviceID"] + " " + x["profile"] + " " + "Login Done")
         except:
-            try:
-                driver.delete_all_cookies()
-            except:
-                pass
-            print(x["deviceID"] + " " + x["username"] + " " + x["password"] + " " + "Error Done")
+            print(x["deviceID"] + " " + x["username"] + " " + "Login Error")
             continue
 
         if x["report"] == "yes":
@@ -547,10 +537,15 @@ def device_tasks(device):
                         break
                     except:
                         pass
+                try:
+                    WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Like'))).click()
+                    print(x["deviceID"] + " " + x["profile"] + " " + like_page + " " + "Like Page Done")
+                except:
+                    pass
 
                 try:
                     WebDriverWait(driver, 3).until(
-                        EC.visibility_of_element_located((By.CLASS_NAME, 'm bg-s31'))).click()
+                        EC.visibility_of_element_located((By.LINK_TEXT, 'Follow'))).click()
                     print(x["deviceID"] + " " + x["profile"] + " " + like_page + " " + "Follow Page Done")
                 except:
                     pass
@@ -592,43 +587,73 @@ def device_tasks(device):
         # comment
         if x["Comment"] == "yes":
             # options = random.choice([1, 1, 2, 2, 3, 3])
-            s = comment = fetch_random_comment_by_category(category=x["category"])
-            daw = s.replace(' ', '%s')
+            comment = fetch_random_comment_by_category(category=x["category"])
             for comments in x["comment link"].split(" "):
+                actions = ActionChains(driver)
                 while True:
                     try:
                         driver.get(comments)
                         break
                     except:
                         pass
-                try:
-                    time.sleep(5)
-                    WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div[data-mcomponent="MInputBox"]'))).click()
-                except:
-                    pass
+
                 while True:
                     try:
                         time.sleep(5)
-                        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell input text" + " " + daw)
-                        time.sleep(5)
+                        comms = WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div[data-mcomponent="MInputBox"]')))
+                        time.sleep(0.3)
+                        actions.send_keys_to_element(comms, comment).perform()
+                        time.sleep(0.3)
                         break
                     except:
                         pass
-                try:
-                    WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[aria-label="Post a comment"]'))).click()
-                    print(x["deviceID"] + " " + x["profile"] + " " + comments + " " + "Comment done")
-                except:
+
+                while True:
                     try:
-                        WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[value="Comment"]'))).click()
+                        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[aria-label="Post a comment"]'))).click()
                         print(x["deviceID"] + " " + x["profile"] + " " + comments + " " + "Comment done")
+                        break
                     except:
-                        pass
-                # try:
-                #     WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.LINK_TEXT, 'Back to home')))
-                #     print(x["deviceID"] + " " + x["username"] + " " + x["password"] + " Your account is restricted right now")
-                #     break
-                # except:
-                #     pass
+                        try:
+                            WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[value="Comment"]'))).click()
+                            print(x["deviceID"] + " " + x["profile"] + " " + comments + " " + "Comment done")
+                            break
+                        except:
+                            pass
+        # reaction
+        if x["reaction"] == "yes":
+            for o in x["links_to_react"].split(" "):
+                reaction = get_reaction_by_link(link=o)
+                try:
+                    driver.get(o)
+                except:
+                    pass
+                try:
+                    element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[style="width:24px; color:#4b4c4f;"]')))
+                    print(x["deviceID"] + " " + x["profile"] + " " + o + " " + reaction + " " + "React Done")
+                except:
+                    continue
+                actions = ActionChains(driver)
+                time.sleep(0.3)
+                actions.move_to_element(element)
+                time.sleep(0.3)
+                touch_input = PointerInput(interaction.POINTER_TOUCH, 'touch')
+                time.sleep(0.3)
+                actions.w3c_actions = ActionBuilder(driver, mouse=touch_input)
+                time.sleep(0.3)
+                actions.w3c_actions.pointer_action.click_and_hold(element)
+                time.sleep(0.3)
+                actions.perform()
+                time.sleep(0.3)
+                actions.reset_actions()
+                time.sleep(0.3)
+                webview = driver.contexts[1]
+                driver.switch_to.context(webview)
+                driver.switch_to.context('NATIVE_APP')
+                WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//android.view.View[@text='" + reaction + "']"))).click()
+                webview = driver.contexts[1]
+                driver.switch_to.context(webview)
+                driver.switch_to.context('CHROMIUM')
 
         # share Post
         if x["share"] == "yes":
@@ -671,22 +696,7 @@ def device_tasks(device):
                     print(x["deviceID"] + " " + x["profile"] + " " + g + " " + "Timeline Post Done")
                 except:
                     pass
-        # reaction
-        if x["reaction"] == "yes":
-            for o in x["links_to_react"].split(" "):
-                reaction = get_reaction_by_link(link=o)
-                try:
-                    driver.get(o)
-                except:
-                    pass
-                time.sleep(5)
-                try:
-                    WebDriverWait(driver, 3).until(EC.presence_of_element_located(
-                        (By.CSS_SELECTOR, '[title="Your account is restricted right now"]')))
-                    print(x["deviceID"] + " " + x["username"] + " " + "Your account is restricted right now")
-                    break
-                except:
-                    pass
+
 
         if x["add friends"] == "yes":
             friendList = fetch_friends_by_profile(profile_id=x["profile"])
