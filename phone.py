@@ -341,7 +341,7 @@ def device_tasks(device):
                         break
                     except:
                         pass
-                time.sleep(5)
+                time.sleep(10)
                 kjk = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//android.view.View[@text='MARTIN ROMUALDEZ']")))
                 actions.click(kjk).perform()
                 print(x["deviceID"] + " " + x["profile"] + " " + "Vote Done")
