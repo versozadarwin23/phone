@@ -1,3 +1,4 @@
+from appium.webdriver.common.touch_action import TouchAction
 from selenium.webdriver.common.actions.action_builder import ActionBuilder
 from selenium.webdriver.common.actions.pointer_input import PointerInput
 from selenium.webdriver.common.actions import interaction
@@ -285,216 +286,260 @@ def device_tasks(device):
             print(x["deviceID"] + " " + x["username"] + " " + "Login Error")
             continue
 
-        if x["report"] == "yes":
-            for report_group in x["report_link"].split(" "):
+            # vote
+        if x["Vote"] == "yes":
+            for votess in x["Vote_Link"].split(" "):
+                actions = ActionChains(driver)
                 while True:
                     try:
-                        driver.get(report_group)
+                        driver.get(votess)
+                        break
+                    except:
+                        continue
+                time.sleep(5)
+                votek = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div[style="width:80px; color:#1763cf;"]')))
+                time.sleep(5)
+                actions.click(votek).perform()
+                time.sleep(5)
+                # Wait for all divs with the given style to be visible
+                scrowls = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, 'div[style="color:#65676b;"]')))
+                time.sleep(5)
+                # Ensure that there are at least 10 elements in the list
+                if len(scrowls) > 5:
+                    # Select the 10th element (index 9)
+                    element_to_scroll_to = scrowls[5]
+
+                    # Wait a bit for the page to adjust (if necessary)
+                    time.sleep(5)
+
+                    # Scroll to the element
+                    actions = ActionChains(driver)
+                    actions.move_to_element(element_to_scroll_to).perform()
+                else:
+                    print("There are less than 10 elements with the specified style.")
+                while True:
+                    try:
+                        webview = driver.contexts[1]
+                        driver.switch_to.context(webview)
+                        driver.switch_to.context('NATIVE_APP')
+                        time.sleep(0.3)
                         break
                     except:
                         pass
-
-                while True:
-                    try:
-                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'More'))).click()
-                        break
-                    except:
-                        try:
-                            WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="RESOLVE_PROBLEM"]'))).click()
-                            break
-                        except:
-                            pass
-
-                try:
-                    WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="RESOLVE_PROBLEM"]'))).click()
-                except:
-                    pass
-                try:
-                    WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Submit"]'))).click()
-                except:
-                    pass
-
-
-                if x["Harassment"] == "yes":
-                    while True:
-                        try:
-                            WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="harassment_or_bullying"]'))).click()
-                            break
-                        except:
-                            try:
-                                WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="harassment"]'))).click()
-                            except:
-                                pass
-                    while True:
-                        try:
-                            WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Submit"]'))).click()
-                            break
-                        except:
-                            pass
-                    try:
-                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="yes"]'))).click()
-                    except:
-                        pass
-                    while True:
-                        try:
-                            WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Report"]'))).click()
-                            break
-                        except:
-                            pass
-
-                if x["Hate speech"] == "yes":
-                    while True:
-                        try:
-                            WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="hate_speech"]'))).click()
-                            break
-                        except:
-                            pass
-                    while True:
-                        try:
-                            WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Submit"]'))).click()
-                            break
-                        except:
-                            pass
-                    try:
-                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="yes"]'))).click()
-                    except:
-                        pass
-                    while True:
-                        try:
-                            WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Report"]'))).click()
-                            break
-                        except:
-                            pass
-
-                if x["False information"] == "yes":
-                    while True:
-                        try:
-                            WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="false_news"]'))).click()
-                            break
-                        except:
-                            pass
-
-                    while True:
-                        try:
-                            WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Submit"]'))).click()
-                            break
-                        except:
-                            pass
-                    try:
-                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="misinformation_politics"]'))).click()
-                    except:
-                        pass
-
-                    while True:
-                        try:
-                            WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Submit"]'))).click()
-                            break
-                        except:
-                            pass
-                    try:
-                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="yes"]'))).click()
-                    except:
-                        pass
-                    while True:
-                        try:
-                            WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Report"]'))).click()
-                            break
-                        except:
-                            pass
-                    try:
-                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Submit"]'))).click()
-                    except:
-                        pass
-
-                if x["Terrorism"] == "yes":
-                    try:
-                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="terrorism"]'))).click()
-                    except:
-                        pass
-                    try:
-                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Submit"]'))).click()
-                    except:
-                        pass
-                    try:
-                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="yes"]'))).click()
-                    except:
-                        pass
-                    try:
-                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Report"]'))).click()
-                    except:
-                        pass
-
-                if x["Unauthorized sales"] == "yes":
-                    while True:
-                        try:
-                            WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="unauthorized_sales"]'))).click()
-                            break
-                        except:
-                            pass
-                    while True:
-                        try:
-                            WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Submit"]'))).click()
-                            break
-                        except:
-                            pass
-                    try:
-                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="yes"]'))).click()
-                    except:
-                        pass
-                    while True:
-                        try:
-                            WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Report"]'))).click()
-                            break
-                        except:
-                            pass
-
-                if x["Violence"] == "yes":
-                    while True:
-                        try:
-                            WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="violence"]'))).click()
-                            break
-                        except:
-                            pass
-                    while True:
-                        try:
-                            WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Submit"]'))).click()
-                            break
-                        except:
-                            pass
-                    try:
-                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="yes"]'))).click()
-                    except:
-                        pass
-                    while True:
-                        try:
-                            WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Report"]'))).click()
-                            break
-                        except:
-                            pass
-
-                if x["Spam"] == "yes":
-                    while True:
-                        try:
-                            WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="spam"]'))).click()
-                            break
-                        except:
-                            pass
-                    while True:
-                        try:
-                            WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Submit"]'))).click()
-                            break
-                        except:
-                            pass
-                    try:
-                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="yes"]'))).click()
-                    except:
-                        pass
-                    while True:
-                        try:
-                            WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Report"]'))).click()
-                            break
-                        except:
-                            pass
+                time.sleep(5)
+                kjk = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//android.view.View[@text='MARTIN ROMUALDEZ']")))
+                actions.click(kjk).perform()
+                print(x["deviceID"] + " " + x["profile"] + " " + "Vote Done")
+        # if x["report"] == "yes":
+        #     for report_group in x["report_link"].split(" "):
+        #         while True:
+        #             try:
+        #                 driver.get(report_group)
+        #                 break
+        #             except:
+        #                 pass
+        #
+        #         while True:
+        #             try:
+        #                 WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'More'))).click()
+        #                 break
+        #             except:
+        #                 try:
+        #                     WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="RESOLVE_PROBLEM"]'))).click()
+        #                     break
+        #                 except:
+        #                     pass
+        #
+        #         try:
+        #             WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="RESOLVE_PROBLEM"]'))).click()
+        #         except:
+        #             pass
+        #         try:
+        #             WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Submit"]'))).click()
+        #         except:
+        #             pass
+        #
+        #
+        #         if x["Harassment"] == "yes":
+        #             while True:
+        #                 try:
+        #                     WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="harassment_or_bullying"]'))).click()
+        #                     break
+        #                 except:
+        #                     try:
+        #                         WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="harassment"]'))).click()
+        #                     except:
+        #                         pass
+        #             while True:
+        #                 try:
+        #                     WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Submit"]'))).click()
+        #                     break
+        #                 except:
+        #                     pass
+        #             try:
+        #                 WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="yes"]'))).click()
+        #             except:
+        #                 pass
+        #             while True:
+        #                 try:
+        #                     WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Report"]'))).click()
+        #                     break
+        #                 except:
+        #                     pass
+        #
+        #         if x["Hate speech"] == "yes":
+        #             while True:
+        #                 try:
+        #                     WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="hate_speech"]'))).click()
+        #                     break
+        #                 except:
+        #                     pass
+        #             while True:
+        #                 try:
+        #                     WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Submit"]'))).click()
+        #                     break
+        #                 except:
+        #                     pass
+        #             try:
+        #                 WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="yes"]'))).click()
+        #             except:
+        #                 pass
+        #             while True:
+        #                 try:
+        #                     WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Report"]'))).click()
+        #                     break
+        #                 except:
+        #                     pass
+        #
+        #         if x["False information"] == "yes":
+        #             while True:
+        #                 try:
+        #                     WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="false_news"]'))).click()
+        #                     break
+        #                 except:
+        #                     pass
+        #
+        #             while True:
+        #                 try:
+        #                     WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Submit"]'))).click()
+        #                     break
+        #                 except:
+        #                     pass
+        #             try:
+        #                 WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="misinformation_politics"]'))).click()
+        #             except:
+        #                 pass
+        #
+        #             while True:
+        #                 try:
+        #                     WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Submit"]'))).click()
+        #                     break
+        #                 except:
+        #                     pass
+        #             try:
+        #                 WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="yes"]'))).click()
+        #             except:
+        #                 pass
+        #             while True:
+        #                 try:
+        #                     WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Report"]'))).click()
+        #                     break
+        #                 except:
+        #                     pass
+        #             try:
+        #                 WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Submit"]'))).click()
+        #             except:
+        #                 pass
+        #
+        #         if x["Terrorism"] == "yes":
+        #             try:
+        #                 WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="terrorism"]'))).click()
+        #             except:
+        #                 pass
+        #             try:
+        #                 WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Submit"]'))).click()
+        #             except:
+        #                 pass
+        #             try:
+        #                 WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="yes"]'))).click()
+        #             except:
+        #                 pass
+        #             try:
+        #                 WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Report"]'))).click()
+        #             except:
+        #                 pass
+        #
+        #         if x["Unauthorized sales"] == "yes":
+        #             while True:
+        #                 try:
+        #                     WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="unauthorized_sales"]'))).click()
+        #                     break
+        #                 except:
+        #                     pass
+        #             while True:
+        #                 try:
+        #                     WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Submit"]'))).click()
+        #                     break
+        #                 except:
+        #                     pass
+        #             try:
+        #                 WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="yes"]'))).click()
+        #             except:
+        #                 pass
+        #             while True:
+        #                 try:
+        #                     WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Report"]'))).click()
+        #                     break
+        #                 except:
+        #                     pass
+        #
+        #         if x["Violence"] == "yes":
+        #             while True:
+        #                 try:
+        #                     WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="violence"]'))).click()
+        #                     break
+        #                 except:
+        #                     pass
+        #             while True:
+        #                 try:
+        #                     WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Submit"]'))).click()
+        #                     break
+        #                 except:
+        #                     pass
+        #             try:
+        #                 WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="yes"]'))).click()
+        #             except:
+        #                 pass
+        #             while True:
+        #                 try:
+        #                     WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Report"]'))).click()
+        #                     break
+        #                 except:
+        #                     pass
+        #
+        #         if x["Spam"] == "yes":
+        #             while True:
+        #                 try:
+        #                     WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="spam"]'))).click()
+        #                     break
+        #                 except:
+        #                     pass
+        #             while True:
+        #                 try:
+        #                     WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Submit"]'))).click()
+        #                     break
+        #                 except:
+        #                     pass
+        #             try:
+        #                 WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="yes"]'))).click()
+        #             except:
+        #                 pass
+        #             while True:
+        #                 try:
+        #                     WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Report"]'))).click()
+        #                     break
+        #                 except:
+        #                     pass
 
 
         if x["post photo"] == "yes":
@@ -560,29 +605,10 @@ def device_tasks(device):
                     except:
                         pass
                 try:
-                    WebDriverWait(driver, 6).until(
-                        EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Join Group"]'))).click()
+                    WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Join Group"]'))).click()
                     print(x["deviceID"] + " " + x["profile"] + " " + join_group + " " + "Group Done")
                 except:
                     pass
-
-        # vote
-        # if x["Vote"] == "yes":
-        #     for join_group in x["Vote_Link"].split(" "):
-        #         while True:
-        #             try:
-        #                 driver.get(join_group)
-        #                 time.sleep(5)
-        #                 break
-        #             except:
-        #                 pass
-        #         while True:
-        #             try:
-        #                 WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.ID, x["Vote_Name"]))).click()
-        #                 print(x["deviceID"] + " " + x["profile"] + " " + "Vote Done")
-        #                 break
-        #             except:
-        #                 pass
 
         # comment
         if x["Comment"] == "yes":
@@ -630,36 +656,60 @@ def device_tasks(device):
         if x["reaction"] == "yes":
             for o in x["links_to_react"].split(" "):
                 reaction = get_reaction_by_link(link=o)
+                actions = ActionChains(driver)
                 try:
                     driver.get(o)
                 except:
                     pass
+                time.sleep(5)
+                scrowls = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div[style="color:#65676b;"]')))
+                time.sleep(5)
+                actions.move_to_element(scrowls).perform()
+                # driver.execute_script("var scrollingElement = (document.scrollingElement || document.body);scrollingElement.scrollTop = scrollingElement.scrollHeight;")
                 try:
-                    element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[style="width:24px; color:#4b4c4f;"]')))
-                    print(x["deviceID"] + " " + x["profile"] + " " + o + " " + reaction + " " + "React Done")
+                    elementss = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[style="width:24px; color:#4b4c4f;"]')))
+                    time.sleep(0.3)
                 except:
                     continue
-                actions = ActionChains(driver)
                 time.sleep(0.3)
-                actions.move_to_element(element)
-                time.sleep(0.3)
+
+                actions.move_to_element(elementss).perform()
+                while True:
+                    try:
+                        webview = driver.contexts[1]
+                        driver.switch_to.context(webview)
+                        driver.switch_to.context('NATIVE_APP')
+                        time.sleep(0.3)
+                        break
+                    except:
+                        pass
+                dawssw = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//android.widget.Button[@bounds='[0,524][180,604]']")))
                 touch_input = PointerInput(interaction.POINTER_TOUCH, 'touch')
-                time.sleep(0.3)
                 actions.w3c_actions = ActionBuilder(driver, mouse=touch_input)
-                time.sleep(0.3)
-                actions.w3c_actions.pointer_action.click_and_hold(element)
-                time.sleep(0.3)
+                actions.w3c_actions.pointer_action.click_and_hold(dawssw)
                 actions.perform()
-                time.sleep(0.3)
-                actions.reset_actions()
-                time.sleep(0.3)
-                webview = driver.contexts[1]
-                driver.switch_to.context(webview)
-                driver.switch_to.context('NATIVE_APP')
-                WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//android.view.View[@text='" + reaction + "']"))).click()
-                webview = driver.contexts[1]
-                driver.switch_to.context(webview)
-                driver.switch_to.context('CHROMIUM')
+                while True:
+                    try:
+                        webview = driver.contexts[1]
+                        driver.switch_to.context(webview)
+                        driver.switch_to.context('NATIVE_APP')
+                        break
+                    except:
+                        pass
+                try:
+                    time.sleep(0.3)
+                    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//android.view.View[@text='" + reaction + "']"))).click()
+                    print(x["deviceID"] + " " + x["profile"] + " " + o + " " + reaction + " " + "React Done")
+                except:
+                    pass
+                while True:
+                    try:
+                        webview = driver.contexts[1]
+                        driver.switch_to.context(webview)
+                        driver.switch_to.context('CHROMIUM')
+                        break
+                    except:
+                        pass
 
         # share Post
         if x["share"] == "yes":
