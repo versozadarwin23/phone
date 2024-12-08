@@ -294,7 +294,7 @@ def device_tasks(device):
         #                 break
         #             except:
         #                 pass
-        # 
+        #
         #         while True:
         #             try:
         #                 WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'More'))).click()
@@ -305,7 +305,7 @@ def device_tasks(device):
         #                     break
         #                 except:
         #                     pass
-        # 
+        #
         #         try:
         #             WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="RESOLVE_PROBLEM"]'))).click()
         #         except:
@@ -314,8 +314,8 @@ def device_tasks(device):
         #             WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Submit"]'))).click()
         #         except:
         #             pass
-        # 
-        # 
+        #
+        #
         #         if x["Harassment"] == "yes":
         #             while True:
         #                 try:
@@ -342,7 +342,7 @@ def device_tasks(device):
         #                     break
         #                 except:
         #                     pass
-        # 
+        #
         #         if x["Hate speech"] == "yes":
         #             while True:
         #                 try:
@@ -366,7 +366,7 @@ def device_tasks(device):
         #                     break
         #                 except:
         #                     pass
-        # 
+        #
         #         if x["False information"] == "yes":
         #             while True:
         #                 try:
@@ -374,7 +374,7 @@ def device_tasks(device):
         #                     break
         #                 except:
         #                     pass
-        # 
+        #
         #             while True:
         #                 try:
         #                     WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Submit"]'))).click()
@@ -385,7 +385,7 @@ def device_tasks(device):
         #                 WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="misinformation_politics"]'))).click()
         #             except:
         #                 pass
-        # 
+        #
         #             while True:
         #                 try:
         #                     WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Submit"]'))).click()
@@ -406,7 +406,7 @@ def device_tasks(device):
         #                 WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Submit"]'))).click()
         #             except:
         #                 pass
-        # 
+        #
         #         if x["Terrorism"] == "yes":
         #             try:
         #                 WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="terrorism"]'))).click()
@@ -424,7 +424,7 @@ def device_tasks(device):
         #                 WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[value="Report"]'))).click()
         #             except:
         #                 pass
-        # 
+        #
         #         if x["Unauthorized sales"] == "yes":
         #             while True:
         #                 try:
@@ -448,7 +448,7 @@ def device_tasks(device):
         #                     break
         #                 except:
         #                     pass
-        # 
+        #
         #         if x["Violence"] == "yes":
         #             while True:
         #                 try:
@@ -472,7 +472,7 @@ def device_tasks(device):
         #                     break
         #                 except:
         #                     pass
-        # 
+        #
         #         if x["Spam"] == "yes":
         #             while True:
         #                 try:
@@ -580,7 +580,8 @@ def device_tasks(device):
                 while True:
                     try:
                         time.sleep(5)
-                        votek = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div[style="width:80px; color:#1763cf;"]')))
+                        votek = WebDriverWait(driver, 5).until(EC.visibility_of_element_located(
+                            (By.CSS_SELECTOR, 'div[style="width:80px; color:#1763cf;"]')))
                         time.sleep(5)
                         break
                     except:
@@ -594,7 +595,8 @@ def device_tasks(device):
                         pass
                 while True:
                     try:
-                        scrowls = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, 'div[style="color:#65676b;"]')))
+                        scrowls = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located(
+                            (By.CSS_SELECTOR, 'div[style="color:#65676b;"]')))
                         time.sleep(5)
                         break
                     except:
@@ -622,17 +624,20 @@ def device_tasks(device):
                         break
                     except:
                         pass
-                try:
-                    time.sleep(5)
-                    kjk = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//android.view.View[@text='MARTIN ROMUALDEZ']")))
-                    actions.click(kjk).perform()
-                    print(x["deviceID"] + " " + x["profile"] + " " + "Vote Done")
-                    webview = driver.contexts[1]
-                    driver.switch_to.context(webview)
-                    driver.switch_to.context('CHROMIUM')
-                    time.sleep(0.3)
-                except:
-                    pass
+                time.sleep(5)
+                kjk = WebDriverWait(driver, 10).until(
+                    EC.presence_of_element_located((By.XPATH, "//android.view.View[@text='MARTIN ROMUALDEZ']")))
+                actions.click(kjk).perform()
+                print(x["deviceID"] + " " + x["profile"] + " " + "Vote Done")
+                while True:
+                    try:
+                        webview = driver.contexts[1]
+                        driver.switch_to.context(webview)
+                        driver.switch_to.context('CHROMIUM')
+                        time.sleep(0.3)
+                        break
+                    except:
+                        pass
 
         # comment
         if x["Comment"] == "yes":
@@ -681,59 +686,49 @@ def device_tasks(device):
             for o in x["links_to_react"].split(" "):
                 reaction = get_reaction_by_link(link=o)
                 actions = ActionChains(driver)
+                while True:
+                    try:
+                        time.sleep(5)
+                        driver.get(o)
+                        time.sleep(5)
+                        break
+                    except:
+                        pass
                 try:
-                    driver.get(o)
-                except:
-                    pass
-                time.sleep(5)
-                scrowls = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div[style="color:#65676b;"]')))
-                time.sleep(5)
-                actions.move_to_element(scrowls).perform()
-                # driver.execute_script("var scrollingElement = (document.scrollingElement || document.body);scrollingElement.scrollTop = scrollingElement.scrollHeight;")
-                try:
-                    elementss = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[style="width:24px; color:#4b4c4f;"]')))
+                    scrowls = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div[style="color:#65676b;"]')))
                     time.sleep(0.3)
-                except:
-                    continue
-                time.sleep(0.3)
+                    actions.move_to_element(scrowls).perform()
+                    time.sleep(0.3)
 
-                actions.move_to_element(elementss).perform()
-                while True:
-                    try:
-                        webview = driver.contexts[1]
-                        driver.switch_to.context(webview)
-                        driver.switch_to.context('NATIVE_APP')
-                        time.sleep(0.3)
-                        break
-                    except:
-                        pass
-                dawssw = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//android.widget.Button[@bounds='[0,524][180,604]']")))
-                touch_input = PointerInput(interaction.POINTER_TOUCH, 'touch')
-                actions.w3c_actions = ActionBuilder(driver, mouse=touch_input)
-                actions.w3c_actions.pointer_action.click_and_hold(dawssw)
-                actions.perform()
-                while True:
-                    try:
-                        webview = driver.contexts[1]
-                        driver.switch_to.context(webview)
-                        driver.switch_to.context('NATIVE_APP')
-                        break
-                    except:
-                        pass
-                try:
-                    time.sleep(0.3)
-                    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//android.view.View[@text='" + reaction + "']"))).click()
-                    print(x["deviceID"] + " " + x["profile"] + " " + o + " " + reaction + " " + "React Done")
                 except:
-                    pass
-                while True:
                     try:
-                        webview = driver.contexts[1]
-                        driver.switch_to.context(webview)
-                        driver.switch_to.context('CHROMIUM')
-                        break
+                        no_comms = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div[style="width:175px; color:#65676b;"]')))
+                        time.sleep(0.3)
+                        actions.move_to_element(no_comms).perform()
+                        time.sleep(0.3)
                     except:
                         pass
+                time.sleep(0.3)
+                dawssw = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, 'div[style="color:#4b4c4f;"]')))[0]
+                dawssw_text = dawssw.text
+                webview = driver.contexts[1]
+                driver.switch_to.context(webview)
+                driver.switch_to.context('NATIVE_APP')
+                try:
+                    holdss = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,f"//android.widget.Button[@text='{dawssw_text} like, double tap and hold for more reactions']")))
+                except:
+                    webview = driver.contexts[1]
+                    driver.switch_to.context(webview)
+                    driver.switch_to.context('CHROMIUM')
+                    continue
+                action = TouchAction(driver)
+                action.long_press(holdss).perform()
+                time.sleep(0.3)
+                WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//android.view.View[@text='" + reaction + "']"))).click()
+                print(x["deviceID"] + " " + x["profile"] + " " + o + " " + reaction + " " + "React Done")
+                webview = driver.contexts[1]
+                driver.switch_to.context(webview)
+                driver.switch_to.context('CHROMIUM')
 
         # share Post
         if x["share"] == "yes":
@@ -814,15 +809,15 @@ def device_tasks(device):
                 except:
                     pass
 
-        try:
-            driver.delete_all_cookies()
-        except:
-            pass
-        try:
-            airplane_mode_on(device)
-            time.sleep(10)
-        except:
-            pass
+        # try:
+        #     driver.delete_all_cookies()
+        # except:
+        #     pass
+        # try:
+        #     airplane_mode_on(device)
+        #     time.sleep(10)
+        # except:
+        #     pass
 
 if __name__ == "__main__":  # confirms that the code is under main function
     for i in phones_sheet:
