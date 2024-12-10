@@ -1,7 +1,4 @@
 from appium.webdriver.common.touch_action import TouchAction
-from selenium.webdriver.common.actions.action_builder import ActionBuilder
-from selenium.webdriver.common.actions.pointer_input import PointerInput
-from selenium.webdriver.common.actions import interaction
 try:
     from urllib.request import urlretrieve
 except ImportError:
@@ -595,8 +592,7 @@ def device_tasks(device):
                         pass
                 while True:
                     try:
-                        scrowls = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located(
-                            (By.CSS_SELECTOR, 'div[style="color:#65676b;"]')))
+                        scrowls = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, 'div[style="color:#65676b;"]')))
                         time.sleep(5)
                         break
                     except:
@@ -695,11 +691,10 @@ def device_tasks(device):
                     except:
                         pass
                 try:
-                    scrowls = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div[style="color:#65676b;"]')))
+                    scrowls = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'div[style="color:#000000;"]')))
+                    scrowl = scrowls[2]
                     time.sleep(0.3)
-                    actions.move_to_element(scrowls).perform()
-                    time.sleep(0.3)
-
+                    actions.move_to_element(scrowl).perform()
                 except:
                     try:
                         no_comms = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div[style="width:175px; color:#65676b;"]')))
@@ -708,6 +703,7 @@ def device_tasks(device):
                         time.sleep(0.3)
                     except:
                         pass
+
                 time.sleep(0.3)
                 dawssw = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, 'div[style="color:#4b4c4f;"]')))[0]
                 dawssw_text = dawssw.text
@@ -809,15 +805,15 @@ def device_tasks(device):
                 except:
                     pass
 
-        # try:
-        #     driver.delete_all_cookies()
-        # except:
-        #     pass
-        # try:
-        #     airplane_mode_on(device)
-        #     time.sleep(10)
-        # except:
-        #     pass
+        try:
+            driver.delete_all_cookies()
+        except:
+            pass
+        try:
+            airplane_mode_on(device)
+            time.sleep(10)
+        except:
+            pass
 
 if __name__ == "__main__":  # confirms that the code is under main function
     for i in phones_sheet:
