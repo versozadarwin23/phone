@@ -18,7 +18,7 @@ from multiprocessing import Process
 import random
 
 try:
-    urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'C:/Users/user/Desktop/phone/phone.py')
+    urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py')
 except:
     pass
 
