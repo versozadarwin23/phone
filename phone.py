@@ -1,8 +1,7 @@
+from selenium.webdriver.common.actions.action_builder import ActionBuilder
+from selenium.webdriver.common.actions.pointer_input import PointerInput
+from selenium.webdriver.common.actions import interaction
 from appium.webdriver.common.touch_action import TouchAction
-try:
-    from urllib.request import urlretrieve
-except ImportError:
-    from urllib import urlretrieve
 from selenium.webdriver.common.action_chains import ActionChains
 import subprocess
 from selenium.webdriver.common.by import By
@@ -16,11 +15,6 @@ from future.utils import iteritems
 from past.builtins import xrange
 from multiprocessing import Process
 import random
-
-try:
-    urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py')
-except:
-    pass
 
 input_file = "phone.xlsx"
 sheet_names = ["Phones", "Apps", "Comments", "Timeline", "Friends", "Reactions"]
@@ -168,7 +162,6 @@ def get_reaction_by_link(link):
             reaction = x["Reaction"]
     return reaction
 
-
 def airplane_mode_off(device):
     try:
         subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell settings put global airplane_mode_on 0",shell=True)
@@ -190,15 +183,15 @@ def airplane_mode_on(device):
         pass
 
 def device_tasks(device):
-    global apps, element
+    global apps, element, dawssw_text, dawdsadwadasdwadwaferfgregre
     fb_apps = dict(
         platformName=device["platformName"],
         automationName=device["automationName"],
         uiautomator2ServerLaunchTimeout='96000',
         platformVersion=device["platformVersion"],
         deviceName=device["deviceName"],
-        unicodeKeyboard=True,
-        resetKeyboard=True,
+        # unicodeKeyboard=True,
+        # resetKeyboard=True,
         skipServerInstallation=True,
         ignoreUnimportantViews=True,
         skipDeviceInitialization=True,
@@ -208,7 +201,7 @@ def device_tasks(device):
         autoWebview=False,
         udid=device["udid"],
         # chromeOptions={"w3c": False},
-        chromeOptions={"w3c": False, "args": ['--user-agent="Mozilla/5.0 (Linux; Android 13; V2053) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Mobile Safari/537.36"' '--disable-notifications']},
+        chromeOptions={"w3c": False, "args": ['--user-agent="Mozilla/5.0 (Linux; Android 13; V2053) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Mobile Safari/537.36"']},
         browserName="Chrome",
         chromedriverExecutable="C:/Users/USER/Desktop/phone/chromedriver/" + device["chromedriver"] + ".exe",
         newCommandTimeout='96000',
@@ -230,7 +223,7 @@ def device_tasks(device):
     for x in apps:
         try:
             airplane_mode_off(device)
-            time.sleep(10)
+            time.sleep(5)
         except:
             pass
 
@@ -241,6 +234,8 @@ def device_tasks(device):
                 break
             except:
                 try:
+                    subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell am force-stop io.appium.uiautomator2.server", shell=True)
+                    subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell am force-stop io.appium.uiautomator2.server.test", shell=True)
                     device_tasks(device)
                 except:
                     pass
@@ -250,6 +245,11 @@ def device_tasks(device):
                 WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.NAME, "email"))).send_keys(x["username"])
             except:
                 try:
+                    subprocess.check_output(
+                        "adb -s " + " " + device["udid"] + " " + "shell am force-stop io.appium.uiautomator2.server",
+                        shell=True)
+                    subprocess.check_output("adb -s " + " " + device[
+                        "udid"] + " " + "shell am force-stop io.appium.uiautomator2.server.test", shell=True)
                     device_tasks(device)
                 except:
                     pass
@@ -257,6 +257,11 @@ def device_tasks(device):
                 WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.NAME, "pass"))).send_keys(x["password"])
             except:
                 try:
+                    subprocess.check_output(
+                        "adb -s " + " " + device["udid"] + " " + "shell am force-stop io.appium.uiautomator2.server",
+                        shell=True)
+                    subprocess.check_output("adb -s " + " " + device[
+                        "udid"] + " " + "shell am force-stop io.appium.uiautomator2.server.test", shell=True)
                     device_tasks(device)
                 except:
                     pass
@@ -274,14 +279,33 @@ def device_tasks(device):
             WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Save"]'))).click()
             time.sleep(15)
         except:
+            print(x["deviceID"] + " " + x["username"] + " " + "Login Error")
+            continue
+
+        try:
+            webview = driver.contexts[1]
+            driver.switch_to.context(webview)
+            driver.switch_to.context('NATIVE_APP')
+            time.sleep(0.3)
+        except:
             pass
+        try:
+            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.ID, 'com.android.chrome:id/positive_button'))).click()
+            time.sleep(3)
+            webview = driver.contexts[1]
+            driver.switch_to.context(webview)
+            driver.switch_to.context('CHROMIUM')
+        except:
+            webview = driver.contexts[1]
+            driver.switch_to.context(webview)
+            driver.switch_to.context('CHROMIUM')
 
         try:
             WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Make a Post on Facebook"]')))
-            print(x["deviceID"] + " " + x["profile"] + " " + "Login Done")
         except:
             print(x["deviceID"] + " " + x["username"] + " " + "Login Error")
             continue
+
 
         # if x["report"] == "yes":
         #     for report_group in x["report_link"].split(" "):
@@ -495,58 +519,91 @@ def device_tasks(device):
         #                     pass
 
 
-        if x["post photo"] == "yes":
-            try:
-                driver.get('https://mbasic.facebook.com/')
-            except:
-                pass
-
-            # Post Timeline photo
-            try:
-                subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + x[
-                    "photo"] + " " + "/storage/emulated/0/Download")
-            except:
-                pass
-            try:
-                WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.NAME, 'view_photo'))).click()
-            except:
-                pass
-            try:
-                WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.NAME, 'file1'))).send_keys(
-                    "//storage//emulated//0//Download//" + x["photo_name"])
-            except:
-                pass
-            try:
-                WebDriverWait(driver, 20).until(
-                    EC.visibility_of_element_located((By.NAME, 'add_photo_done'))).click()
-            except:
-                pass
-            try:
-                WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.NAME, 'view_post'))).click()
-            except:
-                pass
+        #if x["Meme"] == "yes":
+            # for memess in x["Meme_Link"].split(" "):
+            #     try:
+            #         driver.get(memess)
+            #     except:
+            #         pass
+            #     time.sleep(5)
+            #
+            #     #push meme photo to device
+            #     # try:
+            #         # subprocess.check_output("adb -s " + " " + device["udid"] + " " + "push" + " " + x["photo"] + " " + "/storage/emulated/0/Download")
+            #     # except:
+            #     #     pass
+            #     try:
+            #         WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Post a photo"]'))).send_keys("//storage//emulated//0//Download//" + x["photo_name"])
+            #     except:
+            #         pass
 
         # Like Page
         if x["Like Page"] == "yes":
-            for like_page in x["Like Page_Link"].split(" "):
+            for like_page in x["Page_Link"].split(" "):
                 while True:
                     try:
                         driver.get(like_page)
+                        time.sleep(5)
                         break
                     except:
                         pass
-                try:
-                    WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.LINK_TEXT, 'Like'))).click()
-                    print(x["deviceID"] + " " + x["profile"] + " " + like_page + " " + "Like Page Done")
-                except:
-                    pass
 
                 try:
-                    WebDriverWait(driver, 3).until(
-                        EC.visibility_of_element_located((By.LINK_TEXT, 'Follow'))).click()
+                    WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Like"]'))).click()
+                    print(x["deviceID"] + " " + x["profile"] + " " + like_page + " " + "Like Page Done")
+                except:
+                    try:
+                        WebDriverWait(driver, 6).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="See more"]'))).click()
+                    except:
+                        pass
+                    try:
+                        webview = driver.contexts[1]
+                        driver.switch_to.context(webview)
+                        driver.switch_to.context('NATIVE_APP')
+                    except:
+                        pass
+                    try:
+                        WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, "//android.widget.Button[@text='Like']"))).click()
+                        print(x["deviceID"] + " " + x["profile"] + " " + like_page + " " + "Like Page Done")
+                    except:
+                        pass
+                    try:
+                        webview = driver.contexts[1]
+                        driver.switch_to.context(webview)
+                        driver.switch_to.context('CHROMIUM')
+                    except:
+                        pass
+
+
+                try:
+                    WebDriverWait(driver, 0.3).until(
+                        EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Follow"]'))).click()
                     print(x["deviceID"] + " " + x["profile"] + " " + like_page + " " + "Follow Page Done")
                 except:
-                    pass
+                    try:
+                        WebDriverWait(driver, 0.3).until(
+                            EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="See more"]'))).click()
+                    except:
+                        pass
+
+                    try:
+                        webview = driver.contexts[1]
+                        driver.switch_to.context(webview)
+                        driver.switch_to.context('NATIVE_APP')
+                    except:
+                        pass
+                    try:
+                        WebDriverWait(driver, 0.5).until(EC.presence_of_element_located(
+                            (By.XPATH, "//android.widget.Button[@text='Follow']"))).click()
+                        print(x["deviceID"] + " " + x["profile"] + " " + like_page + " " + "Follow Page Done")
+                    except:
+                        pass
+                    try:
+                        webview = driver.contexts[1]
+                        driver.switch_to.context(webview)
+                        driver.switch_to.context('CHROMIUM')
+                    except:
+                        pass
 
         # Join Group
         if x["Join Group"] == "yes":
@@ -672,6 +729,7 @@ def device_tasks(device):
                 while True:
                     try:
                         element = WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[style="color:#65676b;"]')))
+                        time.sleep(0.5)
                         print(x["deviceID"] + " " + x["profile"] + " " + comments + " " + "Comment done")
                         break
                     except:
@@ -684,70 +742,171 @@ def device_tasks(device):
                 actions = ActionChains(driver)
                 while True:
                     try:
-                        time.sleep(5)
                         driver.get(o)
                         time.sleep(5)
                         break
                     except:
                         pass
-                try:
-                    scrowls = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'div[style="color:#000000;"]')))
-                    scrowl = scrowls[2]
-                    time.sleep(0.3)
-                    actions.move_to_element(scrowl).perform()
-                except:
-                    try:
-                        no_comms = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div[style="width:175px; color:#65676b;"]')))
-                        time.sleep(0.3)
-                        actions.move_to_element(no_comms).perform()
-                        time.sleep(0.3)
-                    except:
-                        pass
 
-                time.sleep(0.3)
-                dawssw = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, 'div[style="color:#4b4c4f;"]')))[0]
-                dawssw_text = dawssw.text
-                webview = driver.contexts[1]
-                driver.switch_to.context(webview)
-                driver.switch_to.context('NATIVE_APP')
                 try:
-                    holdss = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,f"//android.widget.Button[@text='{dawssw_text} like, double tap and hold for more reactions']")))
+                    webview = driver.contexts[1]
+                    driver.switch_to.context(webview)
+                    driver.switch_to.context('NATIVE_APP')
+                    time.sleep(0.3)
+                except:
+                    pass
+
+                try:
+                    WebDriverWait(driver, 3).until(EC.visibility_of_element_located((By.ID, 'com.android.chrome:id/positive_button'))).click()
+                    time.sleep(3)
+                    webview = driver.contexts[1]
+                    driver.switch_to.context(webview)
+                    driver.switch_to.context('CHROMIUM')
                 except:
                     webview = driver.contexts[1]
                     driver.switch_to.context(webview)
                     driver.switch_to.context('CHROMIUM')
-                    continue
-                action = TouchAction(driver)
-                action.long_press(holdss).perform()
+
+                try:
+                    dawdsadwadasdwadwaferfgregre = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, '[aria-label="Like button double tap and hold for more reactions."]')))[0]
+                except:
+                    try:
+                        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+                    except:
+                        pass
+
                 time.sleep(0.3)
-                WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//android.view.View[@text='" + reaction + "']"))).click()
-                print(x["deviceID"] + " " + x["profile"] + " " + o + " " + reaction + " " + "React Done")
+                try:
+                    actions.move_to_element(dawdsadwadasdwadwaferfgregre).perform()
+                except:
+                    try:
+                        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+                    except:
+                        pass
+                try:
+                    time.sleep(0.3)
+                    dawssw = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, 'div[style="color:#4b4c4f;"]')))[0]
+                    time.sleep(0.3)
+                    dawssw_text = dawssw.text
+                except:
+                    pass
+
+                try:
+                    holdss = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.CSS_SELECTOR, "div[aria-label='" + dawssw_text + "like, double tap and hold for more reactions'")))
+                except:
+                    continue
+
+                time.sleep(0.3)
+                touch_input = PointerInput(interaction.POINTER_TOUCH, 'touch')
+                time.sleep(0.3)
+                actions.w3c_actions = ActionBuilder(driver, mouse=touch_input)
+                time.sleep(0.3)
+                try:
+                    actions.w3c_actions.pointer_action.click_and_hold(holdss)
+                except:
+                    pass
+                time.sleep(0.3)
+                actions.perform()
+                time.sleep(3)
+                actions.reset_actions()
+                time.sleep(0.5)
+
+                webview = driver.contexts[1]
+                driver.switch_to.context(webview)
+                driver.switch_to.context('NATIVE_APP')
+
+                try:
+                    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//android.widget.Button[@text='" + reaction + "']"))).click()
+                    print(x["deviceID"] + " " + x["profile"] + " " + o + " " + reaction + " " + "React Done")
+                except:
+                    try:
+                        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//android.view.View[@text='" + reaction + "']"))).click()
+                        print(x["deviceID"] + " " + x["profile"] + " " + o + " " + reaction + " " + "React Done")
+                    except:
+                        pass
+                webview = driver.contexts[1]
+                driver.switch_to.context(webview)
+                driver.switch_to.context('CHROMIUM')
+
+        if x["upvote"] == "yes":
+            actions = ActionChains(driver)
+            action = TouchAction(driver)
+            for u in x["upvote_link"].split(" "):
+                reaction = get_reaction_by_link(link=u)
+                while True:
+                    try:
+                        driver.get(u)
+                        driver.set_page_load_timeout(120)
+                        break
+                    except:
+                        pass
+                scrowlssssss = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, 'div[aria-label="Like button double tap and hold for more reactions."]')))[1]
+                actions.move_to_element(scrowlssssss).perform()
+
+                webview = driver.contexts[1]
+                driver.switch_to.context(webview)
+                driver.switch_to.context('NATIVE_APP')
+
+                dawdsafwqfqwdqw = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//android.widget.Button[@text='Like button double tap and hold for more reactions.']")))
+
+                touch_input = PointerInput(interaction.POINTER_TOUCH, 'touch')
+                actions.w3c_actions = ActionBuilder(driver, mouse=touch_input)
+                time.sleep(0.2)
+                actions.w3c_actions.pointer_action.click_and_hold(dawdsafwqfqwdqw)
+                time.sleep(0.2)
+                actions.perform()
+                time.sleep(0.2)
+
+                webview = driver.contexts[1]
+                driver.switch_to.context(webview)
+                driver.switch_to.context('NATIVE_APP')
+                try:
+                    time.sleep(0.1)
+                    WebDriverWait(driver, 0.5).until(EC.presence_of_element_located((By.XPATH, "//android.view.View[@text='" + reaction + "']"))).click()
+                    print(x["deviceID"] + " " + x["profile"] + " " + u + " " + reaction + " " + "React Done")
+                except:
+                    time.sleep(0.1)
+                    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//android.widget.Button[@text='" + reaction + "']"))).click()
+                    print(x["deviceID"] + " " + x["profile"] + " " + u + " " + reaction + " " + "React Done")
+
                 webview = driver.contexts[1]
                 driver.switch_to.context(webview)
                 driver.switch_to.context('CHROMIUM')
 
         # share Post
         if x["share"] == "yes":
-            try:
-                driver.get('https://m.facebook.com/composer/')
-            except:
-                pass
             post_list = x["links_to_share"].split(' ')
+            actionsdawdaw = ActionChains(driver)
             for g in post_list:
-                try:
-                    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, "[aria-label='What's on your mind?']"))).send_keys(g + '\n')
-                except:
-                    pass
-                try:
-                    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, "[aria-label='POST']"))).click()
-                except:
-                    pass
-                try:
-                    WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[title="Your account is restricted right now"]')))
-                    print(x["deviceID"] + " " + x["profile"] + " " + "Your account is restricted right now")
-                    break
-                except:
-                    pass
+                driver.get('https://www.facebook.com/composer/')
+                time.sleep(10)
+                # Wait for all elements to be visible
+                whats_on_your_mind_click = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, 'div[style="color:#666666;"]')))
+                whats_on_your_mind = whats_on_your_mind_click[0]
+                actionsdawdaw.send_keys_to_element(whats_on_your_mind, g).perform()
+                time.sleep(0.3)
+                driver.hide_keyboard()
+                time.sleep(5)
+                whats_on_your_mind_clicks = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, 'div[style="color:#666666;"]')))
+                whats_on_your_mind_clear = whats_on_your_mind_clicks[0]
+                actiondawdaws = ActionChains(driver)
+                time.sleep(0.3)
+                actiondawdaws.click(whats_on_your_mind_clear).perform()
+                time.sleep(0.3)
+                while True:
+                    try:
+                        subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell input keyevent --longpress 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67", shell=True)
+                        time.sleep(0.3)
+                        driver.hide_keyboard()
+                        break
+                    except:
+                        pass
+                time.sleep(0.3)
+                postss_click = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, 'div[style="color:#1877f2;"]')))
+                time.sleep(0.3)
+                actionsdawdaw.click(postss_click[0]).perform()
+                print(x["deviceID"] + " " + x["profile"] + " " + g + " " + "Share Done")
+                time.sleep(0.3)
 
         # Post Timeline without caption
         if x["timeline post"] == "yes":
@@ -781,6 +940,7 @@ def device_tasks(device):
                         EC.presence_of_element_located((By.LINK_TEXT, "Add friend"))).click()
                 except:
                     pass
+
         if x["friends confirm"] == "yes":
             for y in range(1000):
                 try:
@@ -808,7 +968,12 @@ def device_tasks(device):
         try:
             driver.delete_all_cookies()
         except:
-            pass
+            try:
+                subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell am force-stop io.appium.uiautomator2.server",shell=True)
+                subprocess.check_output("adb -s " + " " + device["udid"] + " " + "shell am force-stop io.appium.uiautomator2.server.test",shell=True)
+                device_tasks(device)
+            except:
+                pass
         try:
             airplane_mode_on(device)
             time.sleep(10)
