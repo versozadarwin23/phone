@@ -204,10 +204,9 @@ def device_tasks(device):
     options.add_argument("--disable-notifications")
     options.add_experimental_option('androidPackage', 'com.android.chrome')
     options.add_experimental_option('androidDeviceSerial', device["androidDeviceSerial"])
-
     while True:
         try:
-            driver = webdriver.Chrome("C:/Users/user/Desktop/phone/chromedriver/1.exe", options=options)
+            driver = webdriver.Chrome("C:/Program Files (x86)/phone/chromedriver/1.exe", options=options)
             break
         except:
             pass
