@@ -1,3 +1,8 @@
+try:
+    from urllib.request import urlretrieve
+except ImportError:
+    from urllib import urlretrieve
+
 from selenium.webdriver.common.actions.action_builder import ActionBuilder
 from selenium.webdriver.common.actions.pointer_input import PointerInput
 from selenium.webdriver.common.actions import interaction
@@ -15,6 +20,11 @@ from future.utils import iteritems
 from past.builtins import xrange
 from multiprocessing import Process
 import random
+
+try:
+    urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'C:/Program Files (x86)/phone/phone.py')
+except:
+    pass
 
 input_file = "phone.xlsx"
 sheet_names = ["Phones", "Apps", "Comments", "Timeline", "Friends", "Reactions"]
