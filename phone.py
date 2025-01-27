@@ -201,7 +201,7 @@ def handle_device_tasks(device_id, android_device_serial):
                             (By.CSS_SELECTOR, '[aria-label="Like, button double tap and hold for more reactions."]')))
                         break
                     except:
-                        handle_device_tasks(device_id, android_device_serial)
+                        pass
 
                 try:
                     dawdsadwadasdwadwaferfgregre = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, '[aria-label="Like, button double tap and hold for more reactions."]')))[0]
@@ -209,12 +209,7 @@ def handle_device_tasks(device_id, android_device_serial):
                     try:
                         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
                     except:
-                        while True:
-                            try:
-                                handle_device_tasks(device_id, android_device_serial)
-                                break
-                            except:
-                                pass
+                        pass
 
                 try:
                     actions.move_to_element(dawdsadwadasdwadwaferfgregre).perform()
@@ -222,22 +217,9 @@ def handle_device_tasks(device_id, android_device_serial):
                     try:
                         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
                     except:
-                        while True:
-                            try:
-                                handle_device_tasks(device_id, android_device_serial)
-                                break
-                            except:
-                                pass
+                        pass
                 try:
                     dawssw = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, 'div[style="color:#4b4c4f;"]')))[0]
-                except:
-                    while True:
-                        try:
-                            handle_device_tasks(device_id, android_device_serial)
-                            break
-                        except:
-                            pass
-                try:
                     dawssw_text = dawssw.text
                 except:
                     pass
@@ -252,23 +234,14 @@ def handle_device_tasks(device_id, android_device_serial):
                         touch_input = PointerInput(interaction.POINTER_TOUCH, 'touch')
                         break
                     except:
-                        while True:
-                            try:
-                                handle_device_tasks(device_id, android_device_serial)
-                                break
-                            except:
-                                pass
+                        pass
+
                 while True:
                     try:
                         actions.w3c_actions = ActionBuilder(driver, mouse=touch_input)
                         break
                     except:
-                        while True:
-                            try:
-                                handle_device_tasks(device_id, android_device_serial)
-                                break
-                            except:
-                                pass
+                        pass
                 try:
                     actions.w3c_actions.pointer_action.click_and_hold(holdss)
                 except:
