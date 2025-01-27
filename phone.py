@@ -172,7 +172,6 @@ def handle_device_tasks(device_id, android_device_serial):
             WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Save"]'))).click()
             time.sleep(15)
         except:
-            print(x["deviceID"] + " " + x["username"] + " " + "Login Error")
 
         try:
             WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Make a Post on Facebook"]')))
