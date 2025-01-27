@@ -37,6 +37,7 @@ df_reactions = pd.read_excel(input_file, sheet_name=sheet_names[5])
 # Example: Fetch device ID from the Phones sheet
 device_ids = df_phones['deviceID'].tolist()
 android_device_serials = df_phones['androidDeviceSerial'].tolist()
+chromedrivers = df_phones['chromedriver'].tolist()
 
 def fetch_random_comment_by_category(category, number):
     comment_list = [row["Comment"] for _, row in df_comments.iterrows() if row["Category"] == category]
@@ -93,7 +94,7 @@ def airplane_mode_on(device):
         print(f"Error turning on airplane mode on {device.get('androidDeviceSerial', 'Unknown')}: {e}")
 
 def handle_device_tasks(device_id, android_device_serial):
-    global dawdsadwadasdwadwaferfgregre, dawssw_text, apps, dawdawghjj
+    global dawdsadwadasdwadwaferfgregre, dawssw_text, apps, dawdawghjj, dawssw
     apps = fetch_app_name_by_device_id(device_id=device_id)  # Fetch app details for the device
     for x in apps:
         options = webdriver.ChromeOptions()
@@ -139,21 +140,34 @@ def handle_device_tasks(device_id, android_device_serial):
                 WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.NAME, "email"))).send_keys(x["username"])
                 break
             except:
-                handle_device_tasks(device_id, android_device_serial)
-
+                while True:
+                    try:
+                        handle_device_tasks(device_id, android_device_serial)
+                        break
+                    except:
+                        pass
         while True:
             try:
                 WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.NAME, "pass"))).send_keys(x["password"])
                 break
             except:
-                handle_device_tasks(device_id, android_device_serial)
+                while True:
+                    try:
+                        handle_device_tasks(device_id, android_device_serial)
+                        break
+                    except:
+                        pass
         while True:
             try:
                 WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Log in"]'))).click()
                 break
             except:
-                handle_device_tasks(device_id, android_device_serial)
-
+                while True:
+                    try:
+                        handle_device_tasks(device_id, android_device_serial)
+                        break
+                    except:
+                        pass
         try:
             WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[aria-label="Save"]'))).click()
             time.sleep(15)
@@ -175,8 +189,12 @@ def handle_device_tasks(device_id, android_device_serial):
                         driver.get(link)
                         break
                     except:
-                        handle_device_tasks(device_id, android_device_serial)
-
+                        while True:
+                            try:
+                                handle_device_tasks(device_id, android_device_serial)
+                                break
+                            except:
+                                pass
                 while True:
                     try:
                         WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located(
@@ -186,14 +204,17 @@ def handle_device_tasks(device_id, android_device_serial):
                         handle_device_tasks(device_id, android_device_serial)
 
                 try:
-                    dawdsadwadasdwadwaferfgregre = WebDriverWait(driver, 10).until(
-                        EC.visibility_of_all_elements_located(
-                            (By.CSS_SELECTOR, '[aria-label="Like, button double tap and hold for more reactions."]')))[0]
+                    dawdsadwadasdwadwaferfgregre = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, '[aria-label="Like, button double tap and hold for more reactions."]')))[0]
                 except:
                     try:
                         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
                     except:
-                        pass
+                        while True:
+                            try:
+                                handle_device_tasks(device_id, android_device_serial)
+                                break
+                            except:
+                                pass
 
                 try:
                     actions.move_to_element(dawdsadwadasdwadwaferfgregre).perform()
@@ -201,13 +222,30 @@ def handle_device_tasks(device_id, android_device_serial):
                     try:
                         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
                     except:
-                        pass
+                        while True:
+                            try:
+                                handle_device_tasks(device_id, android_device_serial)
+                                break
+                            except:
+                                pass
                 try:
-                    dawssw = WebDriverWait(driver, 10).until(
-                        EC.visibility_of_all_elements_located((By.CSS_SELECTOR, 'div[style="color:#4b4c4f;"]')))[0]
+                    dawssw = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, 'div[style="color:#4b4c4f;"]')))[0]
+                except:
+                    while True:
+                        try:
+                            handle_device_tasks(device_id, android_device_serial)
+                            break
+                        except:
+                            pass
+                try:
                     dawssw_text = dawssw.text
                 except:
-                    pass
+                    while True:
+                        try:
+                            handle_device_tasks(device_id, android_device_serial)
+                            break
+                        except:
+                            pass
 
                 try:
                     holdss = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR,"div[aria-label='" + dawssw_text + "like, double tap and hold for more reactions'")))
@@ -219,25 +257,39 @@ def handle_device_tasks(device_id, android_device_serial):
                         touch_input = PointerInput(interaction.POINTER_TOUCH, 'touch')
                         break
                     except:
-                        pass
+                        while True:
+                            try:
+                                handle_device_tasks(device_id, android_device_serial)
+                                break
+                            except:
+                                pass
                 while True:
                     try:
                         actions.w3c_actions = ActionBuilder(driver, mouse=touch_input)
                         break
                     except:
-                        pass
+                        while True:
+                            try:
+                                handle_device_tasks(device_id, android_device_serial)
+                                break
+                            except:
+                                pass
                 try:
                     actions.w3c_actions.pointer_action.click_and_hold(holdss)
                 except:
-                    pass
+                    while True:
+                        try:
+                            handle_device_tasks(device_id, android_device_serial)
+                            break
+                        except:
+                            pass
                 actions.perform()
                 time.sleep(3)
                 actions.reset_actions()
                 time.sleep(0.3)
 
                 try:
-                    WebDriverWait(driver, 5).until(
-                        EC.presence_of_element_located((By.CSS_SELECTOR, "div[aria-label='" + reaction + "']"))).click()
+                    WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.CSS_SELECTOR, "div[aria-label='" + reaction + "']"))).click()
                     print(x["deviceID"] + " " + x["profile"] + " " + link + " " + reaction + " " + "React Done")
                     time.sleep(5)
                 except:
@@ -320,8 +372,13 @@ def handle_device_tasks(device_id, android_device_serial):
                 time.sleep(0.3)
                 actionsdawdaw.click(postss_click[0]).perform()
                 print(x["deviceID"] + " " + x["profile"] + " " + share + " " + "Share Done")
-
-
+        while True:
+            try:
+                driver.delete_all_cookies()
+                break
+            except:
+                pass
+        continue
 
 def run_on_multiple_devices():
     # Use ThreadPoolExecutor to run tasks in parallel across multiple devices
@@ -331,3 +388,4 @@ def run_on_multiple_devices():
 
 # Call the function to run tasks across all devices
 run_on_multiple_devices()
+0
