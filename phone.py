@@ -240,12 +240,7 @@ def handle_device_tasks(device_id, android_device_serial):
                 try:
                     dawssw_text = dawssw.text
                 except:
-                    while True:
-                        try:
-                            handle_device_tasks(device_id, android_device_serial)
-                            break
-                        except:
-                            pass
+                    pass
 
                 try:
                     holdss = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR,"div[aria-label='" + dawssw_text + "like, double tap and hold for more reactions'")))
@@ -277,12 +272,8 @@ def handle_device_tasks(device_id, android_device_serial):
                 try:
                     actions.w3c_actions.pointer_action.click_and_hold(holdss)
                 except:
-                    while True:
-                        try:
-                            handle_device_tasks(device_id, android_device_serial)
-                            break
-                        except:
-                            pass
+                    continue
+
                 actions.perform()
                 time.sleep(3)
                 actions.reset_actions()
