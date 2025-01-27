@@ -180,7 +180,7 @@ def handle_device_tasks(device_id, android_device_serial):
                 while True:
                     try:
                         WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located(
-                            (By.CSS_SELECTOR, '[aria-label="Like button double tap and hold for more reactions."]')))
+                            (By.CSS_SELECTOR, '[aria-label="Like, button double tap and hold for more reactions."]')))
                         break
                     except:
                         handle_device_tasks(device_id, android_device_serial)
@@ -188,7 +188,7 @@ def handle_device_tasks(device_id, android_device_serial):
                 try:
                     dawdsadwadasdwadwaferfgregre = WebDriverWait(driver, 10).until(
                         EC.visibility_of_all_elements_located(
-                            (By.CSS_SELECTOR, '[aria-label="Like button double tap and hold for more reactions."]')))[0]
+                            (By.CSS_SELECTOR, '[aria-label="Like, button double tap and hold for more reactions."]')))[0]
                 except:
                     try:
                         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
