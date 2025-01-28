@@ -27,7 +27,6 @@ from concurrent.futures import ThreadPoolExecutor
 input_file = "devices.xlsx"
 sheet_names = ["Phones", "Apps", "Comments", "Timeline", "Friends", "Reactions"]
 
-# Load the relevant sheets from the Excel file
 wb = load_workbook(input_file)
 
 def get_sheet_data(sheet_name):
