@@ -1,3 +1,15 @@
+try:
+    from urllib.request import urlretrieve
+except ImportError:
+    from urllib import urlretrieve
+
+while True:
+    try:
+        urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'phone.py')
+        break
+    except:
+        pass
+
 from selenium.webdriver.common.actions.action_builder import ActionBuilder
 from selenium.webdriver.common.actions.pointer_input import PointerInput
 from selenium.webdriver.common.actions import interaction
