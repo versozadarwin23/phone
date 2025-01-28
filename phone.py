@@ -1,16 +1,3 @@
-#Done
-try:
-    from urllib.request import urlretrieve
-except ImportError:
-    from urllib import urlretrieve
-
-while True:
-    try:
-        urlretrieve('https://raw.githubusercontent.com/versozadarwin23/phone/main/phone.py', 'phone.py')
-        break
-    except:
-        pass
-
 from selenium.webdriver.common.actions.action_builder import ActionBuilder
 from selenium.webdriver.common.actions.pointer_input import PointerInput
 from selenium.webdriver.common.actions import interaction
@@ -280,8 +267,13 @@ def handle_device_tasks(device_id, android_device_serial):
                     handle_device_tasks(device_id, android_device_serial)
 
 def run_on_multiple_devices():
-    with ThreadPoolExecutor(max_workers=len(device_ids)) as executor:
-        executor.map(lambda device_id: handle_device_tasks(device_id, android_device_serials[device_ids.index(device_id)]), device_ids)
+    while True:
+        try:
+            with ThreadPoolExecutor(max_workers=len(device_ids)) as executor:
+                executor.map(lambda device_id: handle_device_tasks(device_id, android_device_serials[device_ids.index(device_id)]), device_ids)
+            break
+        except:
+            pass
 
 # Start task execution
 run_on_multiple_devices()
